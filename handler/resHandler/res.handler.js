@@ -36,7 +36,8 @@ const resErrType = {
     duplicateErr    : { code: 6 , err: "DuplicateErr"       },
     invalidToken    : { code: 7 , err: "InvalidToken"       },
     tokenExpired    : { code: 8 , err: "TokenExpired"       },
-    invalidAPI      : { code: 8 , err: "InvalidAPI"         },
+    invalidAPI      : { code: 9 , err: "InvalidAPI"         },
+    outOfStock      : { code: 10, err: "OutOfStock"         },
 }
 
 

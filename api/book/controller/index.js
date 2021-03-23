@@ -1,3 +1,4 @@
 module.exports = {
-    addBook: require("./addBook")
+    addBook: require( "./addBook" ),
+    bookList: require( "./listBook" ),
 }

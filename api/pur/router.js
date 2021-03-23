@@ -4,7 +4,6 @@ const controller = require( "./controller" );
 const { softAuthorize } = require( "../../handler").tokenHandler;
 // const validate = require( "./validation" );
 
-router.post( "/add", softAuthorize, controller.addBook );
-router.get( "/list", controller.bookList );
+router.post( "/book", softAuthorize, controller.purchaseBook );
 
 module.exports = router;

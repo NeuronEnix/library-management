@@ -1,7 +1,7 @@
 const TokenModel = require( "./model" );
 const { resErr, resErrType } = require( "../resHandler" );
 
-module.exports.maxConcurrentSignInCount = process.env.MAX_CONCURRENT_LOGIN_COUNT || 1;
+module.exports.maxConcurrentSignInCount = process.env.MAX_CONCURRENT_LOGIN_COUNT || require( "../../config").user.maxConcurrentSignInCount
 
 module.exports.refTok = {
 
