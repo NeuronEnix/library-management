@@ -4,10 +4,9 @@ const { resOk, resErr, resErrType } = require( "../../../handler").resHandler;
 module.exports = async function signUp( req, res, next ) {    
 
     try {
-        req.body.pass = await bcrypt.hash( req.body.pass, 10 );
         const userDoc = new User();
         Object.assign( userDoc, req.body );
-        await userDoc.save()
+        await userDoc.save();
         return resOk( res );
 
     } catch ( err ) {
