@@ -1,0 +1,25 @@
+{
+    "user": {
+        "_id" : "user_id",
+        "email": "a@a.com",
+        "pass": "some hash",
+        "name": "user name"
+    },
+    
+    "book" : {
+        "_id": "book_id",
+        "title" : "Book Title",
+        "author": "Book Author",
+        "copies": 200
+    },
+
+    "issues": {
+        "_id": "lend_id",
+        "user_id": "user_id",
+        "book_id": "book_id",
+        "iss_at": "issued_at",
+        "due_at": "Due Date",
+        "ret_at": "Returned Date",
+        "sts": "i->issued; r->returned"
+    }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "library-management",
+  "version": "1.0.0",
+  "description": "Library Management Sytem",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NeuronEnix/library-management.git"
+  },
+  "author": "Kaushik R Bangera",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NeuronEnix/library-management/issues"
+  },
+  "homepage": "https://github.com/NeuronEnix/library-management#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "joi": "^17.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
+    "mongoose": "^5.11.19",
+    "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0",
+    "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
