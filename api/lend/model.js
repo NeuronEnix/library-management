@@ -3,7 +3,8 @@ const moment = require( "moment" );
 
 const { ObjectId } = mongoose.Schema.Types;
 const lendSchema = new mongoose.Schema ({
-    user_id: { type: ObjectId, index: true },
+    lender_id: { type: ObjectId, index: true },
+    borrower_id: { type: ObjectId, index: true },
     book_id: { type: ObjectId, index: true },
     lent_at: { type: Date, default: moment() },
     due_at: { type: Date, default: moment().add( 7, "days" ) },

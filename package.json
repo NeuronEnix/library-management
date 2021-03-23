@@ -1,7 +1,7 @@
 {
   "name": "library-management",
   "version": "1.0.0",
-  "description": "Library Management Sytem",
+  "description": "Library Management System",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
