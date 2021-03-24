@@ -1,5 +1,5 @@
 module.exports = {
-    signUp: require( "./signUp" ),
+    regCustomer: require( "./regCustomer" ),
     signIn: require( "./signIn" ),
     signOut: require( "./signOut" ),
 }

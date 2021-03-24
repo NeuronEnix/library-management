@@ -1,7 +1,7 @@
 const bcrypt = require( "bcrypt" );
 const User = require("../model");
 const { resOk, resErr, resErrType } = require( "../../../handler").resHandler;
-module.exports = async function signUp( req, res, next ) {    
+module.exports = async function regCustomer( req, res, next ) {    
 
     try {
         const userDoc = new User();

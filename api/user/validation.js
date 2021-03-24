@@ -8,7 +8,6 @@ const schema = {
 
 const signUpSchema = Joi.object({
     email: schema.email.required(),
-    pass: schema.pass.required(),
     name: schema.name.required()
 });
 
