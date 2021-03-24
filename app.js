@@ -1,13 +1,14 @@
 require( "dotenv" ).config();
-// npm modules
-const express = require("express");
-const path = require( "path" );
 
-var cookieParser = require('cookie-parser')
+// npm modules
+const path = require( "path" );
+const express = require("express");
+const cookieParser = require('cookie-parser')
+const sessionForExpress = require( "./session.config" );
 
 // handler
 const {
-    dbHandler, reqHandler, resHandler, tokenHandler,
+    dbHandler, reqHandler, resHandler,
 } = require( "./handler" );
 
 // Initializing stuffs
@@ -16,12 +17,13 @@ dbHandler.connectToDatabase();
 // Express setup
 const app = express();
 app.use( cookieParser() );
+app.use( sessionForExpress );
+// app.use( session( { secret: "sessionKey" } ) );
 app.use( express.json() );
+app.use( express.urlencoded({extended:true}) );
+
 app.use( reqHandler.reqLogger );
 
-// // Token related stuffs
-// app.use( tokenHandler.router ); // grants new refTok and accTok
-// app.use( tokenHandler.authorizer );
 
 // // Resource API
 app.use( require( "./api" ) );

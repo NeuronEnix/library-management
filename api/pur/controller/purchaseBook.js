@@ -18,7 +18,7 @@ module.exports = async ( req, res, next ) => {
         bookDoc.save();
         const purchaseDoc = new PurchaseModel();
         Object.assign( purchaseDoc, req.body );
-        purchaseDoc.user_id = req.user.uid;
+        purchaseDoc.user_id = req.session.uid;
         await purchaseDoc.save()
 
         resOk( res, purchaseDoc );

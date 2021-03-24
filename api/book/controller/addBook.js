@@ -7,7 +7,7 @@ module.exports = async ( req, res, next ) => {
         
         const bookDoc = new BookModel();
         Object.assign( bookDoc, req.body );
-        bookDoc.user_id = req.user.uid;
+        bookDoc.user_id = req.session.uid;
         await bookDoc.save();
         return resOk( res, bookDoc );
         

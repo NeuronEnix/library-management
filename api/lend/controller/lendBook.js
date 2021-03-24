@@ -26,7 +26,7 @@ module.exports = async ( req, res, next ) => {
         const lendDoc = await LendModel();
 
         Object.assign( lendDoc, req.body );
-        lendDoc.lender_id = req.user.uid;
+        lendDoc.lender_id = req.session.uid;
         lendDoc.borrower_id = borrowerDoc._id;
         
         await lendDoc.save();
