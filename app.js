@@ -4,7 +4,7 @@ require( "dotenv" ).config();
 const path = require( "path" );
 const express = require("express");
 const cookieParser = require('cookie-parser')
-
+var favicon = require('serve-favicon')
 
 // handler
 const {
@@ -16,6 +16,7 @@ dbHandler.connectToDatabase();
 
 // Express setup
 const app = express();
+app.use( favicon( path.join( __dirname, 'public', 'favicon.ico' ) ) );
 app.use( cookieParser() );
 app.use( sessionHandler.sessionForExpress );
 // app.use( session( { secret: "sessionKey" } ) );

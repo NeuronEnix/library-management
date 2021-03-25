@@ -11,7 +11,8 @@ module.exports = async function signIn( req, res, next ) {
 
         // if user not found or pass is incorrect
         if ( !userDoc || await bcrypt.compare( pass, userDoc.pass ) === false )
-            return resErr( res, resErrType.invalidCred, { infoToClient: "Email or Password Incorrect" } );
+            return res.render( "signIn", { signInError : { message: 'Invalid Email or Password' } } );
+            // return resErr( res, resErrType.invalidCred, { infoToClient: "Email or Password Incorrect" } );
 
         req.session.uid = userDoc._id;
         return resOk( res, "Logged In" );
