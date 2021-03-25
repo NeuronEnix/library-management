@@ -1,7 +1,7 @@
 const bcrypt = require( "bcrypt" );
 
 const UserModel = require("../model");
-const { resOk, resErr, resErrType } = require( "../../../handler").resHandler;
+const { resOk, resErr, resErrType, resRender } = require( "../../../handler").resHandler;
 
 module.exports = async function signIn( req, res, next ) {    
 
@@ -10,12 +10,17 @@ module.exports = async function signIn( req, res, next ) {
         const userDoc = await UserModel.findOne( { email }, { _id:1, name:1, pass:1 } )
 
         // if user not found or pass is incorrect
-        if ( !userDoc || await bcrypt.compare( pass, userDoc.pass ) === false )
-            return res.render( "signIn", { signInError : { message: 'Invalid Email or Password' } } );
+        if ( !userDoc || await bcrypt.compare( pass, userDoc.pass ) === false ) {
+            const popup = { typ: "danger", msg: 'Invalid Email or Password' };
+            const fieldData = { email: req.body.email }; 
+            return resRender( res, "signIn", { popup, fieldData }, resErrType.invalidCred );
+        }
             // return resErr( res, resErrType.invalidCred, { infoToClient: "Email or Password Incorrect" } );
 
         req.session.uid = userDoc._id;
-        return resOk( res, "Logged In" );
+        req.session.name = userDoc.name;
+        return resRender( res, "dashboard" );
+        // return resOk( res, "Logged In" );
         
     } catch ( err ) {
         return resErr( res, resErrType.unknownErr, { infoToServer:err } );

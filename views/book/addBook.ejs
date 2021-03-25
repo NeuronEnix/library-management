@@ -1,0 +1,57 @@
+<html>
+    <title>Add Book</title>
+    <body>
+      <%- include("../partials/navbar") %>
+
+      <%- include("../partials/popup" ) %>
+        <form action="/book/add" method="post" >
+
+          <div class="add-book-component" style="margin-left: 2%">
+
+            <!-- First Row: Title, Author, Edition -->
+            <div class="form-row" >
+
+              <!-- Book Title -->
+              <div class="form-group col-md-6">
+                <label for="title">Book Title</label>
+                <input type="text" class="form-control" name="title" placeholder="Book Title" id="title" >
+              </div>
+            </div>
+            <div class="form-row">
+              <!-- Author Name -->
+              <div class="form-group col-md-3">
+                <label for="author">Author Name</label>
+                <input type="text" class="form-control" name="author" placeholder="Author Name" id="author" >
+              </div>
+
+              <!-- Edition Number -->
+              <div class="form-group col-md-3">
+                <label for="edition">Edition Number</label>
+                <input type="text" class="form-control" name="edition" placeholder="Edition Number" id="edition" >
+              </div>
+            </div>
+
+            <!-- Publisher -->
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label for="author">Publisher Name</label>
+                <input type="text" class="form-control" name="pub" placeholder="Publisher Name" id="pub" >
+              </div>
+            </div>
+
+            <!-- Lend Price -->
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label for="author">Lend Price</label>
+                <input type="number" class="form-control pull-right" name="lend_price" placeholder="Lend Price" id="lend_price" >
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Book</button>
+
+          </div>
+
+          </form>
+          <%- include( "../partials/setFieldData" ) %>
+
+    </body>
+</html>

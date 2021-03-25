@@ -6,6 +6,7 @@ let bookSchema = new mongoose.Schema ({
     title: { type: String, required: true },
     author: { type: String, required: true },
     edition: { type: Number, required:true },
+    pub: { type: String, required: true },
     qty: { type: Number, default:0 },
     lend_price: { type: Number, required: true },
     user_id: { type: ObjectId, ref: "users", required: true }, // user who adds the book

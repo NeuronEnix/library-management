@@ -22,3 +22,10 @@ module.exports.sessionForExpress = session( {
         mongoOptions: mongooseOption
     })
 });
+
+module.exports.isAuthenticated = ( req, res, next ) => {
+    if ( req.session.uid === undefined )
+        return res.redirect( "/user/sign-in" );
+        
+    else next();
+}

@@ -14,6 +14,10 @@ function resOk ( res, data ) {
     res.status( 200 ).send( resData );
 };
 
+function resRender( res, path, resData, resErrType ) {
+    res.render( path, resData );
+    logger( res, { path, resData, resErrType } );    
+}
 function resErr ( res, resErrType, {infoToClient, infoToServer} = {} ) {
     const errData = { 
         sts: "ERR", ...resErrType,
@@ -55,4 +59,4 @@ function uncaughtErrHandler ( err, req, res, next ) {
     else return resErr( res, resErrType.unknownErr, { infoToServer: err } );
 };
 
-module.exports = { resOk, resErr, resErrType, uncaughtErrHandler };
+module.exports = { resOk, resErr, resErrType, uncaughtErrHandler, resRender };
