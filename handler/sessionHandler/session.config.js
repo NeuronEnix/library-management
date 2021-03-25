@@ -10,7 +10,7 @@ const mongooseOption = {
     useUnifiedTopology: true,  
 }
 
-module.exports = session( {
+module.exports.sessionForExpress = session( {
     secret: process.env.SESSION_SECRET || "sessionSecret",
     resave: false,
     saveUninitialized: true,

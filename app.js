@@ -4,11 +4,11 @@ require( "dotenv" ).config();
 const path = require( "path" );
 const express = require("express");
 const cookieParser = require('cookie-parser')
-const sessionForExpress = require( "./session.config" );
+
 
 // handler
 const {
-    dbHandler, reqHandler, resHandler,
+    dbHandler, reqHandler, resHandler, sessionHandler
 } = require( "./handler" );
 
 // Initializing stuffs
@@ -17,7 +17,7 @@ dbHandler.connectToDatabase();
 // Express setup
 const app = express();
 app.use( cookieParser() );
-app.use( sessionForExpress );
+app.use( sessionHandler.sessionForExpress );
 // app.use( session( { secret: "sessionKey" } ) );
 app.use( express.json() );
 app.use( express.urlencoded({extended:true}) );
