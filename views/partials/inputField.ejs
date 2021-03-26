@@ -1,0 +1,20 @@
+<link href="/css/book/inputField.css" rel="stylesheet" type="text/css">
+
+<div class="form__group field">
+    <input
+      type="<%= typeof type != 'undefined' ? type : 'llllllllllllllllllllllllllllll' %>"
+      class="form__field" 
+      placeholder="<%= typeof innerHTML != 'undefined' ? innerHTML : 'llllllllllllllllllllllllllllll' %>"
+      name= "<%= typeof name != 'undefined' ? name : id %>"
+      id="<%= typeof id != 'undefined' ? id : name %>"
+      required
+    />
+
+    <label 
+      for="<%= typeof id != 'undefined' ? id : name %>"
+      class="form__label"
+    >
+   <%= typeof innerHTML != 'undefined' ? innerHTML : 'llllllllllllllllllllllllllllll' %>
+    </label>
+
+  </div>

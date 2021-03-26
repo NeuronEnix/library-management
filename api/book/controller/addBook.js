@@ -2,14 +2,20 @@ const BookModel = require( "../model" );
 
 const { resOk, resErr, resErrType, resRender } = require( "../../../handler").resHandler;
 module.exports = async ( req, res, next ) => {
-    
+    const { title, edition, author } = req.body;
     try {
 
         const bookDoc = new BookModel();
         Object.assign( bookDoc, req.body );
         bookDoc.user_id = req.session.uid;
         await bookDoc.save();
-        return resOk( res, bookDoc );
+        const popup = {
+            typ: "success",
+            msg: `"${title}" - By: ${ author } - Edition: ${edition} - Added Successfully!` 
+        }
+        
+        return resRender( res, "book/addBook", { popup, fieldData: req.body } );
+        // return resOk( res, bookDoc );
         
     } catch ( err ) {
         
@@ -17,7 +23,6 @@ module.exports = async ( req, res, next ) => {
         const book = req.body;
         
         if( err.code === 11000 ) {
-            const { title, edition, author } = req.body;
             const popup = {
                 typ: "warning",
                 msg: `"${title}" - By: ${ author } - Edition: ${edition} - Already Exist!` 

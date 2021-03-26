@@ -1,0 +1,77 @@
+<html>
+    <title>Purchase Book</title>
+    <body>
+      <%- include("../partials/navbar") %>
+
+      <%- include("../partials/popup" ) %>
+      <!-- <link href="/css/book/addBook.css" rel="stylesheet" type="text/css"> -->
+
+        <form action="/book/add" method="post" >
+
+          <div class="add-book-component" style="margin-left: 2%">
+
+            <!-- First Row: Book Title, Author Name, Edition Number-->
+            <div class="form-row" >
+
+              <!-- Book Title -->
+              <div class="form-group col-md-6" >
+                <%- include( "../partials/inputField", {
+                  innerHTML: "Book Title",
+                  name:"title",
+                  type:"text"
+                } );%>
+              </div>
+
+              <!-- Author Name -->
+              <div class="form-group col-md-3" style="margin-left: 10px;margin-right: 10px" >
+                <%- include( "../partials/inputField", {
+                  innerHTML: "Author Name",
+                  name:"title",
+                  type:"text"
+                } );%>
+              </div>
+
+              <!-- Edition Number -->
+              <div class="form-group col-md-2" >
+                <%- include( "../partials/inputField", {
+                  innerHTML: "Edition Number",
+                  name:"edition",
+                  type:"number"
+                } );%>
+              </div>
+            </div>
+            
+          </div>
+          </form>
+          <div class="container-fluid" style="margin-left: 0.5%; margin-right: 1%">
+            
+            <div class="row">
+
+              <div class="col" name="leftField" width="50%" >
+                <div class="row">
+                  <div class="col"> <%- include("./bookMiniCard" ); %> </div>
+                  <div class="col"> <%- include("./bookMiniCard" ); %> </div>
+                  <div class="col"> <%- include("./bookMiniCard" ); %> </div>
+                </div>
+                <div class="row">
+                  <div class="col"> <%- include("./bookMiniCard" ); %> </div>
+                  <div class="col"> <%- include("./bookMiniCard" ); %> </div>
+                  <div class="col"> <%- include("./bookMiniCard" ); %> </div>
+                </div>
+                <div class="row justify-content-center" >
+                  <%- include("../partials/pagination" ); %>
+                </div>
+              </div>
+              <div class="col" name="rightField"  width="50%">
+                <%- include( "./bookPurchaseCard" ); %>
+              </div>
+            </div>
+
+            
+
+
+          </div>
+          <%- include( "../partials/setFieldData" ) %>
+
+    </body>
+</html>

@@ -3,13 +3,10 @@ const mongoose = require( "mongoose" );
 const mongooseOption = {
     useNewUrlParser: true,  
     useCreateIndex: true,  
-    useUnifiedTopology: true,  
+    useUnifiedTopology: true,
+    autoIndex: true,  
 }
 // mongoose.set( 'useFindAndModify'   , false ) ;
-// mongoose.set( 'autoIndex'          , true  ) ;
-
-// Importing schema 
-// require( './app/user/user.model.js' ) ;
 
 // Connects to DB
 const DB_URL = process.env.DB_URL || "mongodb://127.0.0.1:27017/lib"

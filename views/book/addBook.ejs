@@ -4,47 +4,71 @@
       <%- include("../partials/navbar") %>
 
       <%- include("../partials/popup" ) %>
+
         <form action="/book/add" method="post" >
 
           <div class="add-book-component" style="margin-left: 2%">
 
-            <!-- First Row: Title, Author, Edition -->
+            <!-- First Row: Book Title-->
             <div class="form-row" >
 
               <!-- Book Title -->
-              <div class="form-group col-md-6">
-                <label for="title">Book Title</label>
-                <input type="text" class="form-control" name="title" placeholder="Book Title" id="title" >
+              <div class="form-group col-md-6" >
+                <%- include( "../partials/inputField", {
+                  innerHTML: 'Book Title',
+                  name:"title",
+                  type:"text"
+                } );%>
               </div>
+
             </div>
+
+            <!-- Second Row: Author Name, Edition Number -->
             <div class="form-row">
+
               <!-- Author Name -->
-              <div class="form-group col-md-3">
-                <label for="author">Author Name</label>
-                <input type="text" class="form-control" name="author" placeholder="Author Name" id="author" >
+              <div class="form-group col-md-3" >
+                <%- include( "../partials/inputField", {
+                  innerHTML: "Author Name",
+                  name:"author",
+                  type:"text"
+                } );%>
               </div>
 
               <!-- Edition Number -->
+              <div class="form-group col-md-3" >
+                <%- include( "../partials/inputField", {
+                  innerHTML: "Edition Number",
+                  name:"edition",
+                  type:"number"
+                } );%>
+              </div>
+            </div>
+            <!-- Third Row: Publisher Name -->
+            <div class="form-row">
+
+              <!-- Publisher Name -->
               <div class="form-group col-md-3">
-                <label for="edition">Edition Number</label>
-                <input type="text" class="form-control" name="edition" placeholder="Edition Number" id="edition" >
+                <%- include( "../partials/inputField", {
+                  innerHTML: "Publisher Name",
+                  name:"pub",
+                  type:"text"
+                } );%>            
               </div>
             </div>
 
-            <!-- Publisher -->
+            <!-- Fourth Row: Lend Price -->
             <div class="form-row">
-              <div class="form-group col-md-3">
-                <label for="author">Publisher Name</label>
-                <input type="text" class="form-control" name="pub" placeholder="Publisher Name" id="pub" >
-              </div>
-            </div>
 
-            <!-- Lend Price -->
-            <div class="form-row">
+              <!-- Lend Price -->
               <div class="form-group col-md-3">
-                <label for="author">Lend Price</label>
-                <input type="number" class="form-control pull-right" name="lend_price" placeholder="Lend Price" id="lend_price" >
+                <%- include( "../partials/inputField", {
+                  innerHTML: "Lend Price",
+                  name:"lend_price",
+                  type:"number"
+                } );%>             
               </div>
+
             </div>
             <button type="submit" class="btn btn-primary">Add Book</button>
 

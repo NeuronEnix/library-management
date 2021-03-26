@@ -17,6 +17,7 @@ dbHandler.connectToDatabase();
 // Express setup
 const app = express();
 app.use( favicon( path.join( __dirname, 'public', 'favicon.ico' ) ) );
+app.use(express.static(__dirname + '/public'));
 app.use( cookieParser() );
 app.use( sessionHandler.sessionForExpress );
 // app.use( session( { secret: "sessionKey" } ) );
