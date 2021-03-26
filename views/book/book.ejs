@@ -1,12 +1,12 @@
 <html>
-    <title>Purchase Book</title>
+    <title>Book View</title>
     <body>
       <%- include("../partials/navbar") %>
 
       <%- include("../partials/popup" ) %>
       <!-- <link href="/css/book/addBook.css" rel="stylesheet" type="text/css"> -->
 
-        <form action="/book/add" method="post" >
+        <form action="/book/search" method="get" >
 
           <div class="add-book-component" style="margin-left: 2%">
 
@@ -14,7 +14,7 @@
             <div class="form-row" >
 
               <!-- Book Title -->
-              <div class="form-group col-md-6" >
+              <div class="form-group col-md-5" >
                 <%- include( "../partials/inputField", {
                   innerHTML: "Book Title",
                   name:"title",
@@ -26,8 +26,9 @@
               <div class="form-group col-md-3" style="margin-left: 10px;margin-right: 10px" >
                 <%- include( "../partials/inputField", {
                   innerHTML: "Author Name",
-                  name:"title",
-                  type:"text"
+                  name:"author",
+                  type:"text",
+                  required:"false"
                 } );%>
               </div>
 
@@ -36,10 +37,18 @@
                 <%- include( "../partials/inputField", {
                   innerHTML: "Edition Number",
                   name:"edition",
-                  type:"number"
+                  type:"number",
+                  required:"false"
                 } );%>
               </div>
+              <input type="hidden" name="redirectURL" value="book/view">
+              <div class="form-group col-md-1" >
+
+                <button type="submit" class="btn btn-primary">Search</button>
+              </div>
+
             </div>
+
             
           </div>
           </form>

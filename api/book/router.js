@@ -10,4 +10,8 @@ router.get( "/search", controller.searchBook );
 router.get( "/add", ( req, res, next) => {
     return resRender( res, "book/addBook" );
 })
+
+router.get( "/view" , ( req, res, next) => {
+    return resRender( res, "book/book" );
+})
 module.exports = router;

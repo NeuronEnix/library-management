@@ -1,7 +1,7 @@
 .form__group {
     position: relative;
-    padding: 15px 0 0;
-    margin-top: 10px;
+    padding: 10px 0 0;
+    margin-top: 2px;
     width: 100%;
 }
 .form__field {
@@ -20,7 +20,7 @@
     color: transparent;
 }
 .form__field:placeholder-shown ~ .form__label {
-    font-size: 1.3rem;
+    font-size: 1rem;
     cursor: text;
     top: 20px;
 }
@@ -29,13 +29,13 @@
     top: 0;
     display: block;
     transition: 0.2s;
-    font-size: 1rem;
+    font-size: 20;
     color: #9b9b9b;
 }
 .form__field:focus {
-    padding-bottom: 6px;
+    padding-bottom: 2px;
     font-weight: 700;
-    border-width: 3px;
+    border-width: 2px;
     border-image: linear-gradient(to right, #11998e, #38ef7d);
     border-image-slice: 1;
 }
@@ -44,11 +44,7 @@
     top: 0;
     display: block;
     transition: 0.2s;
-    font-size: 1rem;
+    font-size: 0.7rem;
     color: #11998e;
     font-weight: 700;
 }
-/* reset input
-.form__field:required, .form__field:invalid {
-    box-shadow: none;
-} */

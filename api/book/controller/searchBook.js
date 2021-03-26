@@ -1,5 +1,5 @@
 const BookModel = require( "../model" );
-const { resOk, } = require( "../../../handler").resHandler;
+const { resOk, resRender } = require( "../../../handler").resHandler;
 
 const { noOfBookListPerPage } = require( "../../../config").book;
 
@@ -8,8 +8,11 @@ module.exports = async ( req, res, next ) => {
     const title = req.query.title.split("").join(".*");
     const noOfDocToBeSkipped = pg * noOfBookListPerPage;
     const bookDocList = await BookModel
-                            .find( { title: new RegExp( title ) }, { __v:0, user_id:0 } )
+                            .find( { title: new RegExp( title ) }, { title:1, author:1, edition:1, qty:1 } )
                             .skip( noOfDocToBeSkipped || 0 )
                             .limit( noOfBookListPerPage || 10 );
+
+    if( req.query.redirectURL )
+        return resRender( res, redirectURL, { bookMiniCardData: bookDocList } );
     return resOk( res, bookDocList );
 }

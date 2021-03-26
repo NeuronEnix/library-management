@@ -7,9 +7,13 @@
       placeholder="<%= typeof innerHTML != 'undefined' ? innerHTML : 'llllllllllllllllllllllllllllll' %>"
       name= "<%= typeof name != 'undefined' ? name : id %>"
       id="<%= typeof id != 'undefined' ? id : name %>"
-      required
     />
-
+    <script type="text/javascript">
+      const id = "<%= typeof name != 'undefined' ? name : id %>";
+      const required = "<%= typeof required != 'undefined' ? required : 'true' %>";
+      if( required === "true"  || required === "undefined" )
+        document.getElementById(id).required = true;
+    </script>
     <label 
       for="<%= typeof id != 'undefined' ? id : name %>"
       class="form__label"
