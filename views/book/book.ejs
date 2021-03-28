@@ -1,12 +1,12 @@
 <html>
-    <title>Book View</title>
+    <title>LMS - Book</title>
     <body>
       <%- include("../partials/navbar") %>
 
       <%- include("../partials/popup" ) %>
       <!-- <link href="/css/book/addBook.css" rel="stylesheet" type="text/css"> -->
 
-        <form action="/book/search" method="get" >
+        <form action="/book" method="get" >
 
           <div class="add-book-component" style="margin-left: 2%">
 
@@ -41,46 +41,38 @@
                   required:"false"
                 } );%>
               </div>
-              <input type="hidden" name="redirectURL" value="book/view">
+              <input type="hidden" name="redirectURL" value="book/book">
               <div class="form-group col-md-1" >
 
                 <button type="submit" class="btn btn-primary">Search</button>
               </div>
 
             </div>
-
+            
             
           </div>
           </form>
-          <div class="container-fluid" style="margin-left: 0.5%; margin-right: 1%">
-            
+          <div class="container-fluid" style="margin-left: 5px; margin-right: 5px;">
             <div class="row">
-
-              <div class="col" name="leftField" width="50%" >
-                <div class="row">
-                  <div class="col"> <%- include("./bookMiniCard" ); %> </div>
-                  <div class="col"> <%- include("./bookMiniCard" ); %> </div>
-                  <div class="col"> <%- include("./bookMiniCard" ); %> </div>
-                </div>
-                <div class="row">
-                  <div class="col"> <%- include("./bookMiniCard" ); %> </div>
-                  <div class="col"> <%- include("./bookMiniCard" ); %> </div>
-                  <div class="col"> <%- include("./bookMiniCard" ); %> </div>
-                </div>
-                <div class="row justify-content-center" >
-                  <%- include("../partials/pagination" ); %>
-                </div>
-              </div>
-              <div class="col" name="rightField"  width="50%">
-                <%- include( "./bookPurchaseCard" ); %>
-              </div>
+              <div class="col"> <%- include("./bookMiniCard" ); %> </div>
+              <div class="col"> <%- include("./bookMiniCard" ); %> </div>
+              <div class="col"> <%- include("./bookMiniCard" ); %> </div>
+              <div class="col"> <%- include("./bookMiniCard" ); %> </div>
             </div>
 
-            
+            <div class="row">
+              <div class="col"> <%- include("./bookMiniCard" ); %> </div>
+              <div class="col"> <%- include("./bookMiniCard" ); %> </div>
+              <div class="col"> <%- include("./bookMiniCard" ); %> </div>
+              <div class="col"> <%- include("./bookMiniCard" ); %> </div>
+            </div>
+ 
+            <div class="row justify-content-center" > <%- include("../partials/pagination" ); %> </div>
+              
 
 
           </div>
-          <%- include( "../partials/setFieldData" ) %>
+          <%- include( "../partials/setEleValByID" ) %>
 
     </body>
 </html>

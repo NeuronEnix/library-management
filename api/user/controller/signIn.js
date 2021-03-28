@@ -12,14 +12,14 @@ module.exports = async function signIn( req, res, next ) {
         // if user not found or pass is incorrect
         if ( !userDoc || await bcrypt.compare( pass, userDoc.pass ) === false ) {
             const popup = { typ: "danger", msg: 'Invalid Email or Password' };
-            const fieldData = { email: req.body.email }; 
-            return resRender( res, "signIn", { popup, fieldData }, resErrType.invalidCred );
+            const eleKeyValPair = { email: req.body.email }; 
+            return resRender( res, "signIn", { popup, eleKeyValPair }, resErrType.invalidCred );
         }
             // return resErr( res, resErrType.invalidCred, { infoToClient: "Email or Password Incorrect" } );
 
         req.session.uid = userDoc._id;
         req.session.name = userDoc.name;
-        return resRender( res, "dashboard" );
+        return resRender( res, "home" );
         // return resOk( res, "Logged In" );
         
     } catch ( err ) {

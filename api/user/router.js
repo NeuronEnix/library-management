@@ -10,8 +10,8 @@ router.post( "/sign-in", validate.signIn, controller.signIn  );
 router.get( "/sign-in", ( req, res ) => {
     return resRender( res, "signIn" );
 });
-router.get( "/dashboard", ( req, res ) => {
-    return resRender( res, "dashboard" );
+router.get( "/home", ( req, res ) => {
+    return resRender( res, "home" );
 });
 // router.post( "/signOut", controller.signOut );
 

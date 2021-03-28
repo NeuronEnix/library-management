@@ -1,20 +1,29 @@
-<div class="card" style="width: 100%;">
-    <div class="card-body">
-      <h5 class="card-title" style="color: Orange;">Book Name</h5>
-      <h6 class="card-subtitle mb-2 text-muted">By: Author Name</h6>
-      <h6 class="card-subtitle mb-2 text-muted">Edition : 1</h6>
+<form action="/book" method="post">
 
-      <div class="row">
-        <div class="col" style="color: green;"> Avail </div>
-        <div class="col" style="color: red;"> Lent</div>
+    <div class="card" style="width: 100%;">
+      <div class="card-body">
+        <h5 class="card-title" style="color: Orange;">Book Name</h5>
+        <h6 class="card-subtitle mb-2 text-muted">By: Author Name</h6>
+        <h6 class="card-subtitle mb-2 text-muted">Edition: 1</h6>
+  
+        <div class="row">
+          <div class="col" style="color: green;"> Avail </div>
+          <div class="col" style="color: red;"> Lent</div>
+        </div>
+  
+        <div class="row">
+          <div class="col" style="color: green;"> 100 </div>
+          <div class="col" style="color: red;"> 50</div>
+        </div>
+  
+        <div class="row">
+          <button type="button" class="btn btn-link">Lend</button>
+          <button type="button" class="btn btn-link">Return</button>
+          <button type="button" class="btn btn-link">Status</button>
+          <button type="button" class="btn btn-link">Purchase</button>
+        </div>
+  
       </div>
+  </div>
 
-      <div class="row">
-        <div class="col" style="color: green;"> 100 </div>
-        <div class="col" style="color: red;"> 50</div>
-      </div>
-
-      <a href="#" class="card-link">Status</a>
-      <a href="#" class="card-link">Purchase</a>
-    </div>
-</div>
+</form>

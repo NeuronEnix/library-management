@@ -14,7 +14,7 @@ module.exports = async ( req, res, next ) => {
             msg: `"${title}" - By: ${ author } - Edition: ${edition} - Added Successfully!` 
         }
         
-        return resRender( res, "book/addBook", { popup, fieldData: req.body } );
+        return resRender( res, "book/addBook", { popup, eleKeyValPair: req.body } );
         // return resOk( res, bookDoc );
         
     } catch ( err ) {
@@ -28,7 +28,7 @@ module.exports = async ( req, res, next ) => {
                 msg: `"${title}" - By: ${ author } - Edition: ${edition} - Already Exist!` 
             }
             
-            return resRender( res, "book/addBook", { popup, fieldData: req.body }, resErrType.duplicateErr );
+            return resRender( res, "book/addBook", { popup, eleKeyValPair: req.body }, resErrType.duplicateErr );
             // return resErr( res, resErrType.duplicateErr,{
             //     infoToClient: 
             // });
