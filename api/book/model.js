@@ -26,8 +26,8 @@ bookSchema.statics.searchBook = async ( pg, title, author = "", edition = undefi
     author = author.split("").join(".*");
 
     const filter = {
-        title: new RegExp( title ),
-        author: new RegExp( author ),
+        title: new RegExp( title, "i" ),
+        author: new RegExp( author, "i" ),
     };
     if ( edition ) { filter.edition = edition; }
 

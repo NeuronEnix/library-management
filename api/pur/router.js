@@ -6,7 +6,7 @@ const { resRender } = require( "../../handler" ).resHandler;
 router.post( "/pur", controller.purchaseBook );
 
 router.get( "/pur", ( req, res, next ) => {
-    return resRender( res, "book/book" );
+    return resRender( res, "book/bookPage" );
 });
 
 module.exports = router;

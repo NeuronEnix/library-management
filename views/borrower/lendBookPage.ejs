@@ -1,0 +1,35 @@
+<html>
+    <title>Add Book</title>
+    <body>
+      <%- include("../partials/navbar") %>
+
+      <%- include("../partials/popup" ) %>
+
+        <form>
+
+          <div class="lend-book-component" style="margin-left: 2%">
+
+            <!-- First Row: Borrower Email-->
+            <div class="form-row" >
+
+              <!-- Borrower Email -->
+              <div class="form-group col-md-6" >
+                <%- include( "../partials/inputField", {
+                  labelName: 'Borrower Email',
+                  name:"email",
+                  type:"text"
+                } );%>
+              </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary">Lend Book</button>
+            <button type="submit" class="btn btn-danger">Cancel</button>
+
+          </div>
+
+          </form>
+          <%- include( "../partials/setEleValByID" ) %>
+
+    </body>
+</html>

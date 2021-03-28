@@ -16,16 +16,17 @@
               <!-- Book Title -->
               <div class="form-group col-md-5" >
                 <%- include( "../partials/inputField", {
-                  innerHTML: "Book Title",
+                  labelName: "Book Title",
                   name:"title",
-                  type:"text"
+                  type:"text",
+                  required: "false"
                 } );%>
               </div>
 
               <!-- Author Name -->
               <div class="form-group col-md-3" style="margin-left: 10px;margin-right: 10px" >
                 <%- include( "../partials/inputField", {
-                  innerHTML: "Author Name",
+                  labelName: "Author Name",
                   name:"author",
                   type:"text",
                   required:"false"
@@ -35,13 +36,13 @@
               <!-- Edition Number -->
               <div class="form-group col-md-2" >
                 <%- include( "../partials/inputField", {
-                  innerHTML: "Edition Number",
+                  labelName: "Edition Number",
                   name:"edition",
                   type:"number",
                   required:"false"
                 } );%>
               </div>
-              <input type="hidden" name="redirectURL" value="book/book">
+              <input type="hidden" name="redirectURL" value="book/bookPage">
               <div class="form-group col-md-1" >
 
                 <button type="submit" class="btn btn-primary">Search</button>
@@ -52,22 +53,31 @@
             
           </div>
           </form>
-          <div class="container-fluid" style="margin-left: 5px; margin-right: 5px;">
-            <div class="row">
-              <div class="col"> <%- include("./bookMiniCard" ); %> </div>
-              <div class="col"> <%- include("./bookMiniCard" ); %> </div>
-              <div class="col"> <%- include("./bookMiniCard" ); %> </div>
-              <div class="col"> <%- include("./bookMiniCard" ); %> </div>
-            </div>
+          <div class="row" style="margin-left: 5px; margin-right: 5px; width: 100%;">
+            <% if( typeof bookMiniCardData != 'undefined' ) {
+              bookMiniCardData.forEach( ( val, i ) => { 
 
-            <div class="row">
-              <div class="col"> <%- include("./bookMiniCard" ); %> </div>
-              <div class="col"> <%- include("./bookMiniCard" ); %> </div>
-              <div class="col"> <%- include("./bookMiniCard" ); %> </div>
-              <div class="col"> <%- include("./bookMiniCard" ); %> </div>
-            </div>
+                if ( i%4 === 0  ) {
+
+                  if ( i != 0 ) { %>
+                    </div>
+                  <% } %>
+                <div class="row" style="width: 100%">
+                  
+              <% } %>
+              <div class="col-md-3"> <%- include("./bookMiniCard", val ); %> </div>
+            <% } ) %> 
+                  </div>
+            <% } %>
+              
  
-            <div class="row justify-content-center" > <%- include("../partials/pagination" ); %> </div>
+            <div class="row justify-content-center" style="width: 100%" >
+              <% if( typeof bookMiniCardData == 'undefined' || bookMiniCardData.length == 0 ) { %>
+                <h4> No Books Matched </h4>
+              <% } else { %>
+                <%- include("../partials/pagination" ); %> 
+              <% } %>
+            </div>
               
 
 

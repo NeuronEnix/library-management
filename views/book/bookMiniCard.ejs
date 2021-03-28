@@ -1,26 +1,29 @@
-<form action="/book" method="post">
+<form method="/book" method="post" >
 
-    <div class="card" style="width: 100%;">
-      <div class="card-body">
-        <h5 class="card-title" style="color: Orange;">Book Name</h5>
-        <h6 class="card-subtitle mb-2 text-muted">By: Author Name</h6>
-        <h6 class="card-subtitle mb-2 text-muted">Edition: 1</h6>
+  <input type="hidden" name="book_id" value="<%= typeof _id != 'undefined' ? _id : '' %>">
   
+  <div class="card" style="width: 100%;">
+      <div class="card-body">
+
+        <h5 class="card-title" style="color: Orange;"> <%= typeof title != 'undefined' ? title : 'None' %> </h5>
+        <h6 class="card-subtitle mb-2 text-muted"> By: <%= typeof author != 'undefined' ? author : 'None' %> </h6>
+        <h6 class="card-subtitle mb-2 text-muted"> Edition: <%= typeof edition != 'undefined' ? edition : 'None' %> </h6>
+        
         <div class="row">
           <div class="col" style="color: green;"> Avail </div>
           <div class="col" style="color: red;"> Lent</div>
         </div>
   
         <div class="row">
-          <div class="col" style="color: green;"> 100 </div>
-          <div class="col" style="color: red;"> 50</div>
+          <div class="col" style="color: green;"> <%= typeof qty != 'undefined' ? qty : 'None' %>  </div>
+          <div class="col" style="color: red;"> 0</div>
         </div>
   
         <div class="row">
-          <button type="button" class="btn btn-link">Lend</button>
-          <button type="button" class="btn btn-link">Return</button>
-          <button type="button" class="btn btn-link">Status</button>
-          <button type="button" class="btn btn-link">Purchase</button>
+          <button class="btn btn-link" type="submit" formmethod="get" formaction="/book/lend" > Lend </button>
+          <button class="btn btn-link" type="submit" formmethod="get" formaction="/book/return" > Return </button>
+          <button class="btn btn-link" type="submit" formmethod="get" formaction="/book/status" > Status </button>
+          <button class="btn btn-link" type="submit" formmethod="get" formaction="/book/purchase" > Purchase </button>
         </div>
   
       </div>

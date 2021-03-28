@@ -4,9 +4,10 @@ const { resOk, resRender } = require( "../../../handler").resHandler;
 
 module.exports = async( req, res, next) => {
     const { pg, title, author, edition, redirectURL } = req.query;
-    return resRender( res, "book/book", {
+    return resRender( res, "book/bookPage", {
         navBar: { active: "Book" },
-        bookMiniCardData: await BookModel.searchBook(pg, title, author, edition)
+        bookMiniCardData: await BookModel.searchBook( pg, title, author, edition ),
+        eleKeyValPair: req.query,
     });
 
 }

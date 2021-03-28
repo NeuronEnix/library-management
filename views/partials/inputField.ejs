@@ -4,7 +4,7 @@
     <input
       type="<%= typeof type != 'undefined' ? type : 'llllllllllllllllllllllllllllll' %>"
       class="form__field" 
-      placeholder="<%= typeof innerHTML != 'undefined' ? innerHTML : 'llllllllllllllllllllllllllllll' %>"
+      placeholder="<%= typeof labelName != 'undefined' ? labelName : 'llllllllllllllllllllllllllllll' %>"
       name= "<%= typeof name != 'undefined' ? name : id %>"
       id="<%= typeof id != 'undefined' ? id : name %>"
     />
@@ -18,7 +18,7 @@
       for="<%= typeof id != 'undefined' ? id : name %>"
       class="form__label"
     >
-   <%= typeof innerHTML != 'undefined' ? innerHTML : 'llllllllllllllllllllllllllllll' %>
+   <%= typeof labelName != 'undefined' ? labelName : 'llllllllllllllllllllllllllllll' %>
     </label>
 
   </div>
