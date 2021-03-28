@@ -13,7 +13,7 @@ module.exports = {
     },
     
     book: {
-        noOfBookListPerPage: 10
+        noOfBookListPerPage: 8
     },
 
     lend: {

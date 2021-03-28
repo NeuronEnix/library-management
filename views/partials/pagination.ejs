@@ -1,8 +1,27 @@
 
 <nav aria-label="Page navigation example">
     <ul class="pagination">
-      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      <% if ( pg > 0 ) { %>
+        <li class="page-item"><a class="page-link" onclick="onClickPagination( 'prev' )" >Previous</a></li>
+      <% } %>
+      <li class="page-item"><a class="page-link"><%= parseInt(pg)+1 %></a></li>
+      <% if ( eleCount > 0 ) { %>
+        <li class="page-item"><a class="page-link" onclick="onClickPagination( 'next' )" >Next</a></li>
+      <% } %>
     </ul>
   </nav>
+
+<script>
+  
+  function onClickPagination( clickedItem ) {
+    
+    switch ( clickedItem ) {
+      case 'prev': document.getElementById( "pg" ).value = "<%= pg - 1 %>"; break;
+      case 'next': document.getElementById( "pg" ).value = "<%= pg + 1 %>"; break;
+    }
+
+    document.getElementById( "<%= form_id %>" ).submit();
+
+  }
+  
+</script>

@@ -17,11 +17,11 @@ let bookSchema = new mongoose.Schema ({
 bookSchema.index( { title:1, author:1, edition: 1 }, { unique: true } );
 
 bookSchema.statics.searchBook = async ( pg, title, author = "", edition = undefined ) => {
-    pg = typeof pg != 'number' ? 0 : pg;
+    pg = typeof pg == 'undefined' ? 0 : parseInt( pg );
     title = typeof title != 'string' ? "" : title;
     
     const noOfDocToBeSkipped = pg * noOfBookListPerPage;
-
+    
     title = title.split("").join(".*");
     author = author.split("").join(".*");
 
