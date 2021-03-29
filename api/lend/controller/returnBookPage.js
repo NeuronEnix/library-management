@@ -1,4 +1,4 @@
-const LendModel = require( "../model" );
+const LendModel = require( "../model" );1
 
 const { UserModel }=require( "../../user" );
 const { resOk, resRender } = require( "../../../handler").resHandler;
@@ -6,7 +6,8 @@ const { resOk, resRender } = require( "../../../handler").resHandler;
 module.exports = async( req, res, next) => {
     req.query.pg = req.query.pg ? parseInt( req.query.pg ) : 0;
     const { pg, title, author, edition, redirectURL, email } = req.query;
-    return resRender( res, "borrower/returnBookPage", {
+
+    const pageData = {
         navBar: { active: "Return Book" },
         bookMiniCardData: await LendModel.getLentBookList( email ),
         bookMiniCardButtons: [
@@ -14,6 +15,10 @@ module.exports = async( req, res, next) => {
         ],
         eleKeyValPair: req.query,
         pg: req.query.pg
-    });
+    };
+    if ( email && await UserModel.exists( { email } ) == false )
+        pageData.popup = { typ: "warning", msg: "Email Not Registered!" };
+        
+    return resRender( res, "borrower/returnBookPage", pageData );
 
 }

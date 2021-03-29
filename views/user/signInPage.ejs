@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>LMS - Login</title>
-<%- include("partials/bootstrap") %>
+<%- include("../partials/bootstrap") %>
 <style>
 .login-form {
     width: 340px;
@@ -34,7 +34,7 @@
     
 <div class="login-form">
 
-    <%- include( "partials/popup" ); %>
+    <%- include( "../partials/popup" ); %>
 
     <form action="/user/sign-in" method="post">
         <h2 class="text-center">Log In</h2>       
@@ -54,6 +54,6 @@
     </form>
     <!-- <p class="text-center"><a href="#">Create an Account</a></p> -->
 </div>
-<%- include( "partials/setEleValByID" ); %>
+<%- include( "../partials/setEleValByID" ); %>
 </body>
 </html>
