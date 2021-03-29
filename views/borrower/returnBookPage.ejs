@@ -1,5 +1,5 @@
 <html>
-    <title>LMS - Book</title>
+    <title>LMS - Return Book</title>
     <body>
       <%- include("../partials/navbar") %>
 
@@ -71,8 +71,10 @@
                   <% } %>
                 <div class="row" style="width: 100%">
                   
-              <% } %>
-              <div class="col-md-3"> <%- include("./bookMiniCard", val ); %> </div>
+              <% }
+              const hiddenFieldNameList = Object.keys( val );
+              %>
+              <div class="col-md-3"> <%- include("../book/bookMiniCard", {val, buttons: bookMiniCardButtons, hiddenFieldNameList } ); %> </div>
             <% } ) %> 
                   </div>
             <% } %>

@@ -34,11 +34,13 @@ bookSchema.statics.searchBook = async ( pg, title, author = "", edition = undefi
     const project = {
         title:1, author:1, edition:1, qty:1
     }
-
-    return BookModel
-                .find( filter, project )
-                .skip( noOfDocToBeSkipped || 0 )
-                .limit( noOfBookListPerPage || 10 );
+    return await BookModel.aggregate([
+        { $match: filter },
+        { $skip: noOfDocToBeSkipped || 0 },
+        { $limit: noOfBookListPerPage || 10 },
+        { $addFields: { book_id: "$_id" } },
+        { $project: { _id:0, author:1, title:1, edition:1, book_id:1, qty:1 } }
+    ]);
 
 }
 

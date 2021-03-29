@@ -1,16 +1,22 @@
 <form method="/book" method="post" >
-
-  <input type="hidden" name="book_id" value="<%= typeof _id != 'undefined' ? _id : '' %>">
-  <input type="hidden" name="title" value="<%= typeof title != 'undefined' ? title : '' %>">
-  <input type="hidden" name="author" value="<%= typeof author != 'undefined' ? author : '' %>">
-  <input type="hidden" name="edition" value="<%= typeof edition != 'undefined' ? edition : '' %>">
+  <% hiddenFieldNameList.forEach( hiddenFieldName => { %>
+    <input 
+      type="hidden" 
+      name="<%= hiddenFieldName %>" 
+      value="<%= val[ hiddenFieldName ] %>"
+    >
+  <% }) %>
+  <!-- <input type="hidden" name="book_id" value="<%= typeof val._id != 'undefined' ? val._id : '' %>">
+  <input type="hidden" name="title" value="<%= typeof val.title != 'undefined' ? val.title : '' %>">
+  <input type="hidden" name="author" value="<%= typeof val.author != 'undefined' ? val.author : '' %>">
+  <input type="hidden" name="edition" value="<%= typeof val.edition != 'undefined' ? val.edition : '' %>"> -->
   
   <div class="card" style="width: 100%;">
       <div class="card-body">
 
-        <h5 class="card-title" style="color: Orange;"> <%= typeof title != 'undefined' ? title : 'None' %> </h5>
-        <h6 class="card-subtitle mb-2 text-muted"> By: <%= typeof author != 'undefined' ? author : 'None' %> </h6>
-        <h6 class="card-subtitle mb-2 text-muted"> Edition: <%= typeof edition != 'undefined' ? edition : 'None' %> </h6>
+        <h5 class="card-title" style="color: Orange;"> <%= typeof val.title != 'undefined' ? val.title : 'None' %> </h5>
+        <h6 class="card-subtitle mb-2 text-muted"> By: <%= typeof val.author != 'undefined' ? val.author : 'None' %> </h6>
+        <h6 class="card-subtitle mb-2 text-muted"> Edition: <%= typeof val.edition != 'undefined' ? val.edition : 'None' %> </h6>
         
         <div class="row">
           <div class="col" style="color: green;"> Avail </div>
@@ -18,15 +24,19 @@
         </div>
   
         <div class="row">
-          <div class="col" style="color: green;"> <%= typeof qty != 'undefined' ? qty : 'None' %>  </div>
+          <div class="col" style="color: green;"> <%= typeof val.qty != 'undefined' ? val.qty : 'None' %>  </div>
           <div class="col" style="color: red;"> 0</div>
         </div>
   
         <div class="row">
-          <button class="btn btn-link" type="submit" formmethod="get" formaction="/book/lend" > Lend </button>
+
+          <% buttons.forEach( btn => { %>
+            <button class="btn btn-link" type="submit" formmethod="<%= btn.method %>" formaction="<%= btn.action %>" > <%= btn.label %></button>  
+          <% }) %>
+          <!-- <button class="btn btn-link" type="submit" formmethod="get" formaction="/book/lend" > Lend </button>
           <button class="btn btn-link" type="submit" formmethod="get" formaction="/book/return" > Return </button>
           <button class="btn btn-link" type="submit" formmethod="get" formaction="/book/status" > Status </button>
-          <button class="btn btn-link" type="submit" formmethod="get" formaction="/book/purchase" > Purchase </button>
+          <button class="btn btn-link" type="submit" formmethod="get" formaction="/book/purchase" > Purchase </button> -->
         </div>
   
       </div>
