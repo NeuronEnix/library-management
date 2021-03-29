@@ -65,7 +65,7 @@
                 <div class="row" style="width: 100%">
                   
               <% } %>
-              <div class="col-md-3"> <%- include("./bookMiniCard", { val, buttons: bookMiniCardButtons, hiddenFieldNameList: [ 'title', 'author', 'edition', 'book_id' ]  } ); %> </div>
+              <div class="col-md-3"> <%- include("../partials/bookMiniCard", { val, buttons: bookMiniCardButtons, hiddenFieldNameList: [ 'title', 'author', 'edition', 'book_id' ]  } ); %> </div>
             <% } ) %> 
                   </div>
             <% } %>
