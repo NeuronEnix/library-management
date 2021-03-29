@@ -66,11 +66,15 @@
                   labelName: "Lend Price",
                   name:"lend_price",
                   type:"number"
-                } );%>             
+                } );%>
               </div>
 
             </div>
-            <button type="submit" class="btn btn-primary">Add Book</button>
+            <div class="form-group col-md-3">
+              <button class="btn btn-danger" type="button"  onclick="window.location='/book';return false;" style="margin-right: 10px;"> Cancel</button>
+              <button class="btn btn-primary" type="submit" style="margin-right: 10px;"> Add Book</button>
+
+            </div>
 
           </div>
 

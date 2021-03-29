@@ -14,12 +14,6 @@ router.get( "/lend", ( req, res ) => {
 
 router.post( "/return", controller.returnBook );
 
-router.get( "/return", controller.returnBookPage ); // ( req, res ) => {
-    // resRender( res, "borrower/returnBookPage", {
-    //     navBar: { active: "Return Book" },
-    //     ...req.query,
-    //     pg:0
-    // });
-// })
+router.get( "/return", controller.returnBookPage );
 
 module.exports = router;

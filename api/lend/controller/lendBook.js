@@ -44,6 +44,7 @@ module.exports = async ( req, res, next ) => {
         
         const popup = { typ: "success", msg: "Book Lent!" };
         return resRender( res, "borrower/lendBookPage", {
+            navBar: { active: "Book" },
             popup, ...req.body, disableEmail: true, eleKeyValPair: { email: req.body.email } 
         });
         

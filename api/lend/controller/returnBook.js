@@ -1,11 +1,12 @@
 const LendModel = require( "../model" );
 const { BookModel } = require( "../../book");
-const { resOk, resErr, resErrType } = require( "../../../handler").resHandler;
+const { UserModel } = require( "../../user");
+const { resOk, resErr, resErrType, resRender } = require( "../../../handler").resHandler;
 
 module.exports = async ( req, res, next ) => {
     
     try {
-
+        
         const lendDoc = await LendModel.findById( req.body.lend_id, {sts:1, book_id:1} );
 
         if ( !lendDoc ) return resErr( res, resErrType.resNotFound, { infoToClient: "Couldn't Return: user_id or lend_id incorrect"} );
@@ -18,8 +19,20 @@ module.exports = async ( req, res, next ) => {
                 
         bookDoc.qty += 1;
         bookDoc.save(); // Deduct and save and then lend the book
+        
+        const userDoc = await UserModel.findById( req.body.borrower_id, "-_id email" );
 
-        return resOk( res, lendDoc );
+        return resRender( res, "borrower/returnBookPage", {
+            navBar: { active: "Return Book" },
+            bookMiniCardData: await LendModel.getLentBookList( userDoc.email ),
+            bookMiniCardButtons: [
+                { method: "post", action: "/book/return", label: "Return" },
+            ],
+            popup: { typ: "success", msg: `${req.body.title} - Returned!`},
+            eleKeyValPair: { email: userDoc.email },
+            pg: 0
+        });
+        // return resOk( res, lendDoc );
         
     } catch ( err ) {
         
