@@ -1,0 +1,37 @@
+<form method="/book" method="post" >
+    <% hiddenFieldNameList.forEach( hiddenFieldName => { %>
+      <input 
+        type="hidden" 
+        name="<%= hiddenFieldName %>" 
+        value="<%= val[ hiddenFieldName ] %>"
+      >
+    <% }) %>
+    
+    <div class="card" style="width: 100%;">
+        <div class="card-body">
+  
+          <h5 class="card-title" style="color: Orange;"> <%= typeof val.name != 'undefined' ? val.name : 'None' %> </h5>
+          <h6 class="card-subtitle mb-2 text-muted"> email: <%= typeof val.email != 'undefined' ? val.email : 'None' %> </h6>
+          <h6 class="card-subtitle mb-2 text-muted"> contact: <%= typeof val.contact != 'undefined' ? val.contact : 'None' %> </h6>
+          
+          <div class="row">
+            <div class="col" style="color: green;"> Borrowed </div>
+            <div class="col" style="color: red;"> Over Due</div>
+          </div>
+    
+          <div class="row">
+            <div class="col" style="color: green;"> <%= typeof val.borrowed != 'undefined' ? val.borrowed : 'None' %>  </div>
+            <div class="col" style="color: red;"> <%= typeof val.overDue != 'undefined' ? val.overDue : 'None' %> / <%= typeof val.borrowed != 'undefined' ? val.borrowed : 'None' %> </div>
+          </div>
+    
+          <div class="row">
+  
+            <% buttons.forEach( btn => { %>
+              <button class="btn btn-link" type="submit" formmethod="<%= btn.method %>" formaction="<%= btn.action %>" > <%= btn.label %></button>  
+            <% }) %>
+          </div>
+    
+        </div>
+    </div>
+  
+  </form>

@@ -6,10 +6,6 @@
       value="<%= val[ hiddenFieldName ] %>"
     >
   <% }) %>
-  <!-- <input type="hidden" name="book_id" value="<%= typeof val._id != 'undefined' ? val._id : '' %>">
-  <input type="hidden" name="title" value="<%= typeof val.title != 'undefined' ? val.title : '' %>">
-  <input type="hidden" name="author" value="<%= typeof val.author != 'undefined' ? val.author : '' %>">
-  <input type="hidden" name="edition" value="<%= typeof val.edition != 'undefined' ? val.edition : '' %>"> -->
   
   <div class="card" style="width: 100%;">
       <div class="card-body">
@@ -33,10 +29,6 @@
           <% buttons.forEach( btn => { %>
             <button class="btn btn-link" type="submit" formmethod="<%= btn.method %>" formaction="<%= btn.action %>" > <%= btn.label %></button>  
           <% }) %>
-          <!-- <button class="btn btn-link" type="submit" formmethod="get" formaction="/book/lend" > Lend </button>
-          <button class="btn btn-link" type="submit" formmethod="get" formaction="/book/return" > Return </button>
-          <button class="btn btn-link" type="submit" formmethod="get" formaction="/book/status" > Status </button>
-          <button class="btn btn-link" type="submit" formmethod="get" formaction="/book/purchase" > Purchase </button> -->
         </div>
   
       </div>

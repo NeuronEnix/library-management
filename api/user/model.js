@@ -2,9 +2,10 @@ const mongoose = require( 'mongoose' ) ;
 const { defaultUser } = require( "../../config" ).user
 
 var userSchema = new mongoose.Schema ({
-    email: { type: String, index: { unique: true } },
+    email: { type: String, lowercase: true, index: { unique: true } },
     pass: String,
     name: String,
+    contact: Number,
     typ: { type: String, default: "c" }, // c->customer; e->employee;
     sts: { type: String, default:'a' },     // 'a' -> active ; 'd' -> disabled
 });

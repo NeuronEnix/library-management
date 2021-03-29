@@ -1,0 +1,71 @@
+<html>
+    <title>LMS - User</title>
+    <body>
+      <%- include("../partials/navbar", { navBar: { active: "User" } } ) %>
+
+      <%- include("../partials/popup" ) %>
+
+        <form id="search_form" action="/user" method="get" >
+          <input type="hidden" name="pg" id="pg" value="<%= pg %>">
+          <div class="user-component" style="margin-left: 2%">
+
+            <!-- First Row: Email-->
+            <div class="form-row" >
+
+              <!-- Email -->
+              <div class="form-group col-md-5" >
+                <%- include( "../partials/inputField", {
+                  labelName: "Email",
+                  name:"email",
+                  type:"text",
+                  required: "false"
+                } );%>
+              </div>
+
+              <input type="hidden" name="redirectURL" value="user/userPage">
+              <div class="form-group col-md-1" >
+                <button type="submit" class="btn btn-primary">Search</button>
+              </div>
+
+            </div>
+            
+            
+          </div>
+          </form>
+          <div class="row" style="margin-left: 5px; margin-right: 5px; width: 100%;">
+            <% if( typeof userMiniCardData != 'undefined' ) {
+              userMiniCardData.forEach( ( val, i ) => { 
+
+                if ( i%4 === 0  ) {
+
+                  if ( i != 0 ) { %>
+                    </div>
+                  <% } %>
+                <div class="row" style="width: 100%">
+                  
+              <% } %>
+              <div class="col-md-3"> <%- include("../partials/userMiniCard", { val, buttons: userMiniCardButtons, hiddenFieldNameList: [ 'user_id' ]  } ); %> </div>
+            <% } ) %> 
+                  </div>
+            <% } %>
+              
+ 
+            <div class="row justify-content-center" style="width: 100%" >
+              <% if( typeof userMiniCardData == 'undefined' || userMiniCardData.length == 0 ) { %>
+                <h4> No User Matched </h4>
+              <% } else { %>
+                <%- include("../partials/pagination", {
+                  pg,
+                  eleCount: userMiniCardData.length,
+                  form_id: "search_form"
+                }); %> 
+              <% } %>
+            </div>
+              
+
+
+          </div>
+          <%- include( "../partials/setEleValByID" ) %>
+
+    </body>
+</html>

@@ -15,8 +15,8 @@ function resOk ( res, data ) {
 };
 
 function resRender( res, path, resData, resErrType ) {
-    res.render( path, resData );
     logger( res, { path, resData, resErrType } );    
+    res.render( path, resData );
 }
 function resErr ( res, resErrType, {infoToClient, infoToServer} = {} ) {
     const errData = { 

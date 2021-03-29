@@ -9,7 +9,8 @@ module.exports = {
             pass: bcrypt.hashSync( "a", 10 ),
             name: "a",
             typ: "e"
-        }
+        },
+        noOfUserListPerPage: 8
     },
     
     book: {

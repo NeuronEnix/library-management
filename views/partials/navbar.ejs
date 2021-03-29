@@ -21,6 +21,10 @@
         <a class="nav-link" href="/book">Book</a>
       </li>
       
+      <li class="nav-item <%= activeNav === 'User' ? 'active' : '' %>">
+        <a class="nav-link" href="/user">User</a>
+      </li>
+      
       <li class="nav-item <%= activeNav === 'Return Book' ? 'active' : '' %>">
         <a class="nav-link" href="/book/return">Return Book</a>
       </li>
@@ -36,7 +40,7 @@
       <!-- <li class="nav-item">
         <a class="nav-link disabled" href="#">Disabled</a>
       </li> -->
-      
+
     </ul>
   </div>
 </nav>
