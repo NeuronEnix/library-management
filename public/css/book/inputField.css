@@ -10,7 +10,7 @@
     border: 0;
     border-bottom: 2px solid #9b9b9b;
     outline: 0;
-    font-size: 1.3rem;
+    font-size: 1.2rem; /* actual text font size */
     color: #fff;
     padding: 7px 0;
     background: transparent;
@@ -20,7 +20,7 @@
     color: transparent;
 }
 .form__field:placeholder-shown ~ .form__label {
-    font-size: 1rem;
+    font-size: 1rem; /* inside label text font size */
     cursor: text;
     top: 20px;
 }
@@ -29,7 +29,7 @@
     top: 0;
     display: block;
     transition: 0.2s;
-    font-size: 20;
+    font-size: 0.8rem; /* top label text font size */
     color: #9b9b9b;
 }
 .form__field:focus {
@@ -44,7 +44,7 @@
     top: 0;
     display: block;
     transition: 0.2s;
-    font-size: 0.7rem;
+    font-size: 0.7rem;/* on focus top label text font size */
     color: #11998e;
     font-weight: 700;
 }
