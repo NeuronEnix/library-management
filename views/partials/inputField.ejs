@@ -9,16 +9,18 @@
       id="<%= typeof id != 'undefined' ? id : name %>"
     />
     <script type="text/javascript">
+      {
       const id = "<%= typeof name != 'undefined' ? name : id %>";
-
+      console.log( id );
       const required = "<%= typeof required != 'undefined' ? required : 'true' %>";
       const disabled = "<%= typeof disabled != 'undefined' ? disabled : 'false' %>";
 
       if( required === "true"  || required === "undefined" )
         document.getElementById(id).required = true;
 
-      if ( disabled === "true" ) 
+      if ( disabled == "true" ) 
         document.getElementById(id).disabled = true;
+      }
     </script>
     <label 
       for="<%= typeof id != 'undefined' ? id : name %>"

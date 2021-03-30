@@ -4,28 +4,39 @@
 
     <div class="card-body">
         <h5 class="card-title"> <%- include('./inputField', {
-            labelName: "Title",
-            name:"title",
-            type:"text",
-            disabled:"true"
+            labelName: title.label,
+            name: title.name,
+            type: title.type,
+            disabled: title.disabled
         } ) %> </h5>
 
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 100%;">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <%- include('./inputField', {
-                        labelName: "Title",
-                        name:"title",
-                        type:"text",
-                        disabled:"true"
-                    } ) %>
-                </li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Vestibulum at eros</li>
+                <% body.forEach( ( val ) => { %>
+                    <li class="list-group-item">
+                        <%- include('./inputField', {
+                            labelName: val.label,
+                            name: val.name,
+                            type: val.type,
+                            disabled: "true"
+                        } ) %>
+                    </li>
+                <% }) %>
             </ul>
         </div>
-
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <form>
+            <div class="row">
+                <% buttons.forEach( ( val ) => { %>
+                    <div class="col" style= "width: 50%; padding:0px; margin-left: 1px;">
+                        <a type="submit" class="float-right btn btn-<%= val.type %>" 
+                            formaction ="<%= val.formaction %>"
+                            formmethod ="<%= val.formmethod %>">
+                            <%= val.label %>
+                        </a>
+                    </div>
+                <% }) %>
+            </div>
+        </form>
     </div>
 
 </div>
