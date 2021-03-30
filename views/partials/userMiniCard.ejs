@@ -20,8 +20,8 @@
           </div>
     
           <div class="row">
-            <div class="col" style="color: green;"> <%= typeof val.borrowed != 'undefined' ? val.borrowed : 'None' %>  </div>
-            <div class="col" style="color: red;"> <%= typeof val.overDue != 'undefined' ? val.overDue : 'None' %> / <%= typeof val.borrowed != 'undefined' ? val.borrowed : 'None' %> </div>
+            <div class="col" style="color: green;"> <%= typeof val.trackers != 'undefined' ? val.trackers.borrowed : 0 %>  </div>
+            <div class="col" style="color: red;"> <%= typeof val.trackers != 'undefined' ? val.trackers.overDue : 0 %></div>
           </div>
     
           <div class="row">

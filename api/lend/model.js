@@ -1,9 +1,7 @@
 const mongoose = require( 'mongoose' ) ;
 const moment = require( "moment" );
-const util = require("util");
 
-const { UserModel } = require( '../user' );
-const { BookModel } = require( '../book' );
+const UserModel = require( '../user/model' );
 
 const { ObjectId } = mongoose.Schema.Types;
 const lendSchema = new mongoose.Schema ({
@@ -50,5 +48,5 @@ lendSchema.statics.getLentBookList = async ( email ) => {
     
 }
 
-const LendModel = mongoose.model( 'issue', lendSchema ) ;
+const LendModel = mongoose.model( 'lends', lendSchema ) ;
 module.exports = LendModel;

@@ -21,4 +21,3 @@ User.estimatedDocumentCount( ( err, count ) => {
         userDoc.save();
     }
 } );
-User.count
