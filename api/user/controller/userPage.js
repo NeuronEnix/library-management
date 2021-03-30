@@ -39,9 +39,7 @@ module.exports = async( req, res, next) => {
             preserveNullAndEmptyArrays: true
         } },
 
-        { $project: { name:1, email:1, contact:1, trackers:1 } },
-        { $addFields: { user_id: "$_id" } },
-        { $project: { _id:0 } },
+        { $project: { _id:0, user_id: "$_id", name:1, email:1, contact:1, trackers:1, } },
     ])
 
     
