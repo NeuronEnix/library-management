@@ -16,8 +16,8 @@
   function onClickPagination( clickedItem ) {
     
     switch ( clickedItem ) {
-      case 'prev': document.getElementById( "pg" ).value = "<%= pg - 1 %>"; break;
-      case 'next': document.getElementById( "pg" ).value = "<%= pg + 1 %>"; break;
+      case 'prev': document.getElementById( "pageNo" ).value = "<%= pg - 1 %>"; break;
+      case 'next': document.getElementById( "pageNo" ).value = "<%= pg + 1 %>"; break;
     }
 
     document.getElementById( "<%= form_id %>" ).submit();

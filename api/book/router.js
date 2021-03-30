@@ -5,6 +5,7 @@ const { isAuthenticated } = require( "../../handler").sessionHandler;
 
 
 router.get( "/" , controller.bookPage );
+router.get( "/view" , controller.bookViewPage );
 
 router.get( "/add", ( req, res, next) => {
     return resRender( res, "book/addBook" );

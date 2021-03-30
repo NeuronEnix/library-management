@@ -1,0 +1,31 @@
+<div class="card" style="width: 18rem;">
+
+    <img src="<%= imgPath %>" class="card-img-top col-sm-8" alt="">
+
+    <div class="card-body">
+        <h5 class="card-title"> <%- include('./inputField', {
+            labelName: "Title",
+            name:"title",
+            type:"text",
+            disabled:"true"
+        } ) %> </h5>
+
+        <div class="card" style="width: 18rem;">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <%- include('./inputField', {
+                        labelName: "Title",
+                        name:"title",
+                        type:"text",
+                        disabled:"true"
+                    } ) %>
+                </li>
+                <li class="list-group-item">Dapibus ac facilisis in</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+            </ul>
+        </div>
+
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+
+</div>
