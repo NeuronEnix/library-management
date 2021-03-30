@@ -8,7 +8,6 @@ module.exports = async( req, res, next) => {
     
 
     return resRender( res, "book/bookPage", {
-        navBar: { active: "Book" },
         bookMiniCardData: await BookModel.searchBook( pg, title, author, edition ),
         bookMiniCardButtons: [
             { method: "get", action: "/book/lend", label: "Lend" },

@@ -23,7 +23,6 @@ module.exports = async ( req, res, next ) => {
         const userDoc = await UserModel.findById( req.body.borrower_id, "-_id email" );
 
         return resRender( res, "borrower/returnBookPage", {
-            navBar: { active: "Return Book" },
             bookMiniCardData: await LendModel.getLentBookList( userDoc.email ),
             bookMiniCardButtons: [
                 { method: "post", action: "/book/return", label: "Return" },

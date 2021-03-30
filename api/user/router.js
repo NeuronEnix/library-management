@@ -11,7 +11,7 @@ router.post( "/sign-in", validate.signIn, controller.signIn );
 router.get( "/", controller.userPage );
 
 router.get( "/register", ( req, res ) => {
-    return resRender( res, "user/registerPage", { navBar: { active: "Register User" } } );
+    return resRender( res, "user/registerPage" );
 });
 
 router.get( "/sign-in", ( req, res ) => {

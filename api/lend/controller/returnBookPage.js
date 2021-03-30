@@ -8,7 +8,6 @@ module.exports = async( req, res, next) => {
     const { pg, title, author, edition, redirectURL, email } = req.query;
 
     const pageData = {
-        navBar: { active: "Return Book" },
         bookMiniCardData: await LendModel.getLentBookList( email ),
         bookMiniCardButtons: [
             { method: "post", action: "/book/return", label: "Return" },

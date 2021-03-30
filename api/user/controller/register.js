@@ -10,7 +10,6 @@ module.exports = async function regCustomer( req, res, next ) {
 
         return resRender( res, "user/registerPage", {
             popup: { typ: "success", msg: "Email Registered!" },
-            navBar: { active: "Register User" },
             eleKeyValPair: req.body,
             disableInput: true,
         });
@@ -21,7 +20,6 @@ module.exports = async function regCustomer( req, res, next ) {
         if ( err.code === 11000 ) {
             return resRender( res, "user/registerPage", {
                 popup: { typ: "warning", msg: "Email Already Registered" },
-                navBar: { active: "Register User" },
                 eleKeyValPair: req.body,
                 disableInput: true,
             });

@@ -7,9 +7,7 @@ const { isAuthenticated } = require( "../../handler").sessionHandler;
 router.get( "/" , controller.bookPage );
 
 router.get( "/add", ( req, res, next) => {
-    return resRender( res, "book/addBook", {
-        navBar: { active: "Add Book" }
-    });
+    return resRender( res, "book/addBook" );
 });
 
 router.post( "/add", isAuthenticated, controller.addBook );
