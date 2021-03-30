@@ -13,7 +13,7 @@ module.exports = async function signIn( req, res, next ) {
         if ( !userDoc || await bcrypt.compare( pass, userDoc.pass ) === false ) {
             const popup = { typ: "danger", msg: 'Invalid Email or Password' };
             const eleKeyValPair = { email: req.body.email }; 
-            return resRender( res, "signIn", { popup, eleKeyValPair }, resErrType.invalidCred );
+            return resRender( res, "user/signInPage", { popup, eleKeyValPair }, resErrType.invalidCred );
         }
             // return resErr( res, resErrType.invalidCred, { infoToClient: "Email or Password Incorrect" } );
 
