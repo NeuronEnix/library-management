@@ -11,7 +11,8 @@
             labelName: title.label,
             name: title.name,
             type: title.type,
-            disabled: title.disabled
+            disabled: title.disabled,
+            value: title.value,
         } ) %> </h5>
 
         <div class="card" style="width: 100%;">
@@ -22,7 +23,8 @@
                             labelName: val.label,
                             name: val.name,
                             type: val.type,
-                            disabled: "true"
+                            disabled: "true",
+                            value: val.value,
                         } ) %>
                     </li>
                 <% }) %>

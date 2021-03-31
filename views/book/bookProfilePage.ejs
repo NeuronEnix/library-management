@@ -10,10 +10,10 @@
 
         <%- include( "../partials/infoCard", {
             imgPath: "/book.png",
-            title: { label: "Title", name: "title", type: "text", disabled: "true" },
+            title: { label: "Title", name: "title", type: "text", disabled: "true", value: title },
             body: [
-                { label: "Author", name: "author", type: "text", disabled: "true" },
-                { label: "Edition", name: "edition", type: "text", disabled: "true" },
+                { label: "Author", name: "author", type: "text", disabled: "true", value: author },
+                { label: "Edition", name: "edition", type: "text", disabled: "true", value: edition },
             ],
             buttons: [
 
@@ -30,17 +30,37 @@
     <link href="/css/progBar.css" rel="stylesheet" type="text/css">
 
     <div class="col-md-3">
-
+        <% const { avail=0, borrowed=0, overDue=0, lifeTimeBorrow=0, lifeTimeOverDue=0 } = trackers;
+        // ( variable || 1 ) -> used to avoid division by zero error
+            const totalAvailable = avail + borrowed;
+            const availPercent = (avail * 100 / (totalAvailable || 1) ).toFixed(2);
+            const borrowedPercent = (borrowed * 100 / (totalAvailable || 1)).toFixed(2);
+            const overDuePercent = (overDue * 100 / (borrowed || 1) ).toFixed(2);
+        %>
         <%- include( "../partials/progBar", {
-            body: [
-            { label: "Available", value: 50, value2: 100, percentage: 50, color: "success" }, 
-            { label: "Borrowed", value: 50, percentage: 50, color: "primary" }, 
-            { label: "Reissued", value: 30, percentage: 30, color: "warning" }, 
-            { label: "Over Due", value: 10, percentage: 10, color: "danger" }, 
-
-            { label: "Life Time Borrows", value: 100, color: "primary", progBar: "false" }, 
-            { label: "Life Time Reissued",value: 100,  color: "warning", progBar: "false" }, 
-            { label: "Life Time Over Due",value: 100,  color: "danger", progBar: "false" }, 
+            body: [ 
+                {
+                    label: "Available", color: "success",
+                    value: avail, value2: totalAvailable, percentage: availPercent,
+                }, { 
+                    label: "Borrowed", color: "primary", 
+                    value: borrowed, value2: totalAvailable, percentage: borrowedPercent, 
+                }, { 
+                    label: "Reissued", color: "warning",
+                    value: 30, percentage: 30, 
+                }, { 
+                    label: "Over Due", color: "danger",
+                    value: overDue, value2: totalAvailable, percentage: overDuePercent, 
+                }, { 
+                    label: "Life Time Borrows", color: "primary",
+                    value: lifeTimeBorrow, progBar: "false" 
+                }, { 
+                    label: "Life Time Reissued", color: "warning", 
+                    value: 10, progBar: "false" 
+                }, { 
+                    label: "Life Time Over Due", color: "danger", 
+                    value: lifeTimeOverDue, progBar: "false" 
+                }, 
             ]
         }) %>
 
@@ -78,8 +98,6 @@
     
 </div>
 </div>
-<%- include( "../partials/setEleValByID" ); %>
-
 <body>
 
     
