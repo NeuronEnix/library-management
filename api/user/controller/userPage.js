@@ -48,7 +48,7 @@ module.exports = async( req, res, next) => {
         userMiniCardButtons: [
             { method: "get", action: "/book", label: "Lend" },
             { method: "get", action: "/book/return", label: "Return" },
-            { method: "get", action: "/user/view", label: "View" },
+            { method: "get", action: "/user/profile", label: "View" },
         ],
         eleKeyValPair: req.query,
         pg: req.query.pg

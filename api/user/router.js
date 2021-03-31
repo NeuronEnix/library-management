@@ -9,6 +9,7 @@ router.post( "/sign-in", validate.signIn, controller.signIn );
 
 
 router.get( "/", controller.userPage );
+router.get( "/profile" , controller.userProfilePage );
 
 router.get( "/register", ( req, res ) => {
     return resRender( res, "user/registerPage" );

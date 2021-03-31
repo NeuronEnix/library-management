@@ -12,7 +12,7 @@ module.exports = async( req, res, next) => {
         bookMiniCardButtons: [
             { method: "get", action: "/book/lend", label: "Lend" },
             { method: "get", action: "/book/return", label: "Return" },
-            { method: "get", action: "/book/view", label: "View" },
+            { method: "get", action: "/book/profile", label: "View" },
             { method: "get", action: "/book/purchase", label: "Purchase" },
         ],
         eleKeyValPair: req.query,

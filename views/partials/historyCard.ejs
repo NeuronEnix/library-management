@@ -2,76 +2,30 @@
     <h6 class="m-0 font-weight-bold text-primary">History</h6>
 </div>
 <div class="card-body">
+    
+    <% checkBoxList.forEach( checkBox => {
 
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-        <label class="form-check-label" for="inlineCheckbox1">Borrowed</label>
-    </div>
+        const { name, id, label, color } = checkBox %>
+        
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="<%= name %>" id="<%= id || name %>">
+            <label class="form-check-label text-<%= color %>" for="<%= id || name %>"><%= label %></label>
+        </div>
 
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option1">
-        <label class="form-check-label" for="inlineCheckbox2">Reissued</label>
-    </div>
-
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option1">
-        <label class="form-check-label" for="inlineCheckbox3">Over Due</label>
-    </div>
-
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option1">
-        <label class="form-check-label" for="inlineCheckbox3">Returned</label>
-    </div>
-
+    <% }) %>
+    
     <div class="form-check form-check-inline">
         <button type="button" class="btn btn-primary">Refresh</button>
     </div>
-    <table class="table table-hover table-dark">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Borrowed</th>
-            <th scope="col">Reissued</th>
-            <th scope="col">Due</th>
-            <th scope="col">Returned</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-          </tr>
 
-        </tbody>
-      </table>
-      <div class="row justify-content-center" style="width: 100%" >
+    <%- include( "../partials/table", { ...table } ) %>
+    <div class="row justify-content-center" style="width: 100%" >
 
-          <%- include("../partials/pagination", {
-            pg:3,
-            eleCount: 5,
-            form_id: "refresh-form"
-          }); %> 
+        <%- include("../partials/pagination", {
+        pg:3,
+        eleCount: 5,
+        form_id: "refresh-form"
+        }); %> 
 
-      </div>
     </div>
+</div>

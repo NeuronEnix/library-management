@@ -3,5 +3,5 @@ module.exports = {
     bookList: require( "./listBook" ),
     searchBook: require( "./searchBook" ),
     bookPage: require( "./bookPage" ),
-    bookViewPage: require( "./bookViewPage" ),
+    bookProfilePage: require( "./bookProfilePage" ),
 }

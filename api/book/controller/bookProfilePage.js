@@ -4,7 +4,8 @@ const { resRender } = require( "../../../handler").resHandler;
 
 module.exports = async( req, res, next) => {
 
-    return resRender( res, "book/bookViewPage", {
+    // BookModel.aggregate( )
+    return resRender( res, "book/bookProfilePage", {
         eleKeyValPair: req.query,
     } );
 

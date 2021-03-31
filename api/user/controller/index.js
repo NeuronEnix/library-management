@@ -3,4 +3,5 @@ module.exports = {
     signIn: require( "./signIn" ),
     signOut: require( "./signOut" ),
     userPage: require( "./userPage" ),
+    userProfilePage: require( "./userProfilePage" ),
 }

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <%- include( "../partials/bootstrap" ) %>
+<head> <title>LMS - User Profile</title> </head>
+
+<%- include( "../partials/navbar", { activeNav: "User" } ) %>
+<div class="row" style="margin-left: 5px;margin-right: 5px; padding: 0px 0px">
+    
+    <div class="col-md-2.2" >
+
+        <%- include( "../partials/infoCard", {
+            imgPath: "/user.png",
+            title: { label: "Name", name: "name", type: "text", disabled: "true" },
+            body: [
+                { label: "Email", name: "email", type: "text", disabled: "true" },
+                { label: "Contact", name: "contact", type: "text", disabled: "true" },
+            ],
+            buttons: [
+
+                { label: "Click To Disable", type: "danger", 
+                formaction: "/user/status", formmethod: "post" },
+
+                { label: "Edit", type: "primary", 
+                formaction: "/user/edit", formmethod: "get" },            
+            ]
+        } ) %>
+        
+    </div>
+
+    <link href="/css/progBar.css" rel="stylesheet" type="text/css">
+
+    <div class="col-md-3">
+
+        <%- include( "../partials/progBar", {
+            body: [
+            { label: "Borrowed", value: 50, color: "success", progBar: "false" }, 
+            { label: "Reissued", value: 30, color: "warning", progBar: "false" }, 
+            { label: "Over Due", value: 10, color: "danger", progBar: "false"}, 
+
+            { label: "Life Time Borrows", value: 100, color: "primary", progBar: "false" }, 
+            { label: "Life Time Reissued",value: 100,  color: "warning", progBar: "false" }, 
+            { label: "Life Time Over Due",value: 100,  color: "danger", progBar: "false" }, 
+            ]
+        }) %>
+
+    </div>
+
+    <div class="col"; style="width: 100%">
+
+        <%- include( "../partials/historyCard", {
+            checkBoxList: [
+                { label: "Borrowed", name: "borrowed", color: "primary", checked: true },
+                { label: "Reissued", name: "reissued", color: "warning", checked: true },
+                { label: "Over Due", name: "overDue", color: "danger", checked: true },
+                { label: "Returned", name: "returned", color: "success", checked: true },
+            ],
+            table: { 
+                startSlNum: 1,
+                headerList: [ "Book", "Borrowed", "Reissued", "Due", "Returned" ],
+                rowList: [
+                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
+                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
+                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
+                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
+                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
+                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
+                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
+                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
+                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
+                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "-- / -- / ----"],
+                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "-- / -- / ----"],
+                ]
+            }
+        } ) %>
+
+    </div>
+    
+</div>
+</div>
+<%- include( "../partials/setEleValByID" ); %>
+
+<body>
+
+    
+</body>
+
+</html>
