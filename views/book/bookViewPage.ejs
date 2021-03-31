@@ -4,9 +4,9 @@
 <head> <title> Book View </title> </head>
 
 <%- include( "../partials/navbar", { activeNav: "Book" } ) %>
-<div class="row">
+<div class="row" style="margin-left: 5px;margin-right: 5px">
     
-    <div class="col-md-3">
+    <div class="col-md-2.2" >
 
         <%- include( "../partials/infoCard", {
             imgPath: "/book.png",
@@ -27,14 +27,30 @@
         
     </div>
 
-    <div class="col-md-3">
-
-    </div>
+    <link href="/css/book/progBar.css" rel="stylesheet" type="text/css">
 
     <div class="col-md-3">
 
+        <%- include( "../partials/progBar", {
+            body: [
+            { label: "Available", value: 50, value2: 100, percentage: 50, color: "success" }, 
+            { label: "Borrowed", value: 50, percentage: 50, color: "primary" }, 
+            { label: "Reissued", value: 30, percentage: 30, color: "warning" }, 
+            { label: "Over Due", value: 10, percentage: 10, color: "danger" }, 
+
+            { label: "Life Time Borrows", value: 100, color: "primary", progBar: "false" }, 
+            { label: "Life Time Reissued",value: 100,  color: "warning", progBar: "false" }, 
+            { label: "Life Time Over Due",value: 100,  color: "danger", progBar: "false" }, 
+            ]
+        }) %>
+
     </div>
 
+    <div class="col">
+        <%- include( "../partials/historyCard" ); %>
+      </div>
+
+    </div>
 </div>
 <%- include( "../partials/setEleValByID" ) %>
 

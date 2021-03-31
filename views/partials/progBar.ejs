@@ -1,0 +1,26 @@
+<link href="/css/book/progBar.css" rel="stylesheet" type="text/css">
+
+<% body.forEach( stat => { %>
+    <div class="card shadow">
+
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-<%= stat.color %>">
+                <%= stat.label %>
+                <%= stat.value != undefined ? "( " + stat.value + ( stat.value2 != undefined ? " / " + stat.value2 : "" ) + " )": ""; %>
+                <span class="float-right">
+                    <%= stat.percentage != undefined ? stat.percentage + "%" : "" %>
+                </span> 
+            </h6>
+        </div>
+
+        <div class="card-body" style="padding: 2px">
+            <!-- <h4 class="small font-weight-bold"> <%= stat.label %> <span class="float-right"> <%= stat.percentage %>% </span></h4> -->
+            <% if ( typeof stat.progBar == 'undefined' || stat.progBar == "true" ) { %>
+                <div class="progress mb-4">
+                    <div class="progress-bar bg-<%= stat.color %>" role="progressbar" style="width: <%= stat.percentage %>%" aria-valuenow="<%= stat.percentage %>" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            <% } %>
+        </div>
+
+    </div>
+<% } ) %>
