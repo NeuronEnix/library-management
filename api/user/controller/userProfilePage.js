@@ -1,7 +1,14 @@
 const UserModel = require( "../model" );
 const { resRender } = require( "../../../handler").resHandler;
 
+const { noOfBookHistoryListPerPage } = require( "../../../config").user;
+
 module.exports = async( req, res, next) => {
+
+    const { pg = 0 } = req.query;
+
+    const noOfDocToBeSkipped = pg * noOfBookHistoryListPerPage;
+
     const userProfileData = await UserModel.aggregate([
         { $match: { email:req.query.email } },
         { $project: { _id:1, name:1, email:1, contact:1 } },
@@ -11,6 +18,8 @@ module.exports = async( req, res, next) => {
             pipeline: [
                 { $match: { $expr: { $eq: [ "$borrower_id", "$$user_id" ] } } },
                 { $sort: { lent_at:-1 } },
+                { $skip: noOfDocToBeSkipped || 0 },
+                { $limit: noOfBookHistoryListPerPage || 20 },
                 { $lookup: {
                     from: "books",
                     let: { book_id: "$book_id" },
@@ -49,7 +58,7 @@ module.exports = async( req, res, next) => {
                         ret_at: { $dateToString: { date: "$ret_at",format: "%d-%m-%Y", timezone: "+05:30", onNull: "Not Returned" } },
                     }},
                 }},
-                { $project: { _id:0 } },
+                { $project: { _id:0,  } },
             ],
             as: "trackers",
         }},
@@ -57,9 +66,10 @@ module.exports = async( req, res, next) => {
             path : "$trackers",
             preserveNullAndEmptyArrays: true
         } },
-        { $project: { _id:0, } },
+        { $project: { _id:0 } },
     ]);
- 
+    if ( !userProfileData[0].trackers ) userProfileData[0].trackers = {};
+    // if ( !userProfileData.trackers ) userProfileData.trackers = { borrowed:0 };
     return resRender( res, "user/userProfilePage", userProfileData[0] );
 
 }

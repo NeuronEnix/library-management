@@ -1,9 +1,16 @@
 const mongoose = require("mongoose");
 const BookModel = require( "../model" );
 
+const { noOfUserHistoryListPerPage } = require( "../../../config").book;
+
 const { resRender } = require( "../../../handler").resHandler;
 
 module.exports = async( req, res, next) => {
+
+    const { pg = 0 } = req.query;
+
+    const noOfDocToBeSkipped = pg * noOfUserHistoryListPerPage;
+
     const bookProfileData = await BookModel.aggregate([
         { $match: { _id: mongoose.Types.ObjectId( req.query.book_id ) } },
         { $project: { _id:1, qty:1, author:1, title:1, edition:1 } },
@@ -13,6 +20,8 @@ module.exports = async( req, res, next) => {
             pipeline: [
                 { $match: { $expr: { $eq: [ "$book_id", "$$book_id" ] } } },
                 { $sort: { lent_at:-1 } },
+                { $skip: noOfDocToBeSkipped || 0 },
+                { $limit: noOfUserHistoryListPerPage || 20 },
                 { $lookup: {
                     from: "users",
                     let: { user_id: "$borrower_id" },

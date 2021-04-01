@@ -8,16 +8,18 @@ module.exports = {
             email: "a",
             pass: bcrypt.hashSync( "a", 10 ),
             name: "a",
-            typ: "e"
+            typ: "e",
         },
-        noOfUserListPerPage: 8
+        noOfUserListPerPage: 8,
+        noOfBookHistoryListPerPage: 20,
     },
     
     book: {
-        noOfBookListPerPage: 8
+        noOfBookListPerPage: 8,
+        noOfUserHistoryListPerPage: 20,
     },
 
     lend: {
-        maxBookLendPerUser: 5
-    }
+        maxBookLendPerUser: 5,
+    },
 }
