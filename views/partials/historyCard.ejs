@@ -2,7 +2,8 @@
     <h6 class="m-0 font-weight-bold text-primary">History</h6>
 </div>
 <div class="card-body" style="width: 100%; padding:0px">
-    <form>
+    <form action="<%= refreshAction %>" method="get">
+    <%- include( "../partials/hiddenField", { hiddenFieldList } ) %>
     <% checkBoxList.forEach( checkBox => {
 
             const { name, id, label, color, checked=true } = checkBox %>
@@ -17,7 +18,7 @@
             </script>
         <% }) %>
         <div class="form-check form-check-inline">
-            <button type="button" class="btn btn-primary">Refresh</button>
+            <button type="submit" class="btn btn-primary">Refresh</button>
         </div>
     </form>
     <div class="row justify-content-center" style="width: 100%" ><%- include( "../partials/table", { ...table } ) %></div>

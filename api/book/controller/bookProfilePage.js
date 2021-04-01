@@ -71,7 +71,7 @@ module.exports = async( req, res, next) => {
         { $addFields: { "trackers.avail": "$qty" } },
         { $project: { _id:0, qty:0 } },
     ]);
-    
+    bookProfileData[0].book_id = req.query.book_id;
     return resRender( res, "book/bookProfilePage", bookProfileData[0] );
 
 }
