@@ -4,7 +4,7 @@ const BookModel = require( "../model" );
 const { resRender } = require( "../../../handler").resHandler;
 
 module.exports = async( req, res, next) => {
-    const data = await BookModel.aggregate([
+    const bookProfileData = await BookModel.aggregate([
         { $match: { _id: mongoose.Types.ObjectId( req.query.book_id ) } },
         { $project: { _id:1, qty:1, author:1, title:1, edition:1 } },
         { $lookup: {
@@ -63,6 +63,6 @@ module.exports = async( req, res, next) => {
         { $project: { _id:0, qty:0 } },
     ]);
     
-    return resRender( res, "book/bookProfilePage", { ...data[0] } );
+    return resRender( res, "book/bookProfilePage", bookProfileData[0] );
 
 }

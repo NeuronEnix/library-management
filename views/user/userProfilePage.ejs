@@ -10,10 +10,10 @@
 
         <%- include( "../partials/infoCard", {
             imgPath: "/user.png",
-            title: { label: "Name", name: "name", type: "text", disabled: "true" },
+            title: { label: "Name", name: "name", type: "text", disabled: "true", value:name },
             body: [
-                { label: "Email", name: "email", type: "text", disabled: "true" },
-                { label: "Contact", name: "contact", type: "text", disabled: "true" },
+                { label: "Email", name: "email", type: "text", disabled: "true", value: email},
+                { label: "Contact", name: "contact", type: "text", disabled: "true", value: contact},
             ],
             buttons: [
 
@@ -31,15 +31,28 @@
 
     <div class="col-md-3">
 
+        <% const { borrowed=0, reissued=0, overDue=0, lifeTimeBorrow=0, lifeTimeOverDue=0 } = trackers; %>
         <%- include( "../partials/progBar", {
             body: [
-            { label: "Borrowed", value: 50, color: "success", progBar: "false" }, 
-            { label: "Reissued", value: 30, color: "warning", progBar: "false" }, 
-            { label: "Over Due", value: 10, color: "danger", progBar: "false"}, 
-
-            { label: "Life Time Borrows", value: 100, color: "primary", progBar: "false" }, 
-            { label: "Life Time Reissued",value: 100,  color: "warning", progBar: "false" }, 
-            { label: "Life Time Over Due",value: 100,  color: "danger", progBar: "false" }, 
+                {
+                    label: "Borrowed", color: "success",
+                    value: borrowed, progBar: "false"
+                }, {
+                    label: "Reissued", color: "warning",
+                    value: reissued, value2: borrowed, progBar: "false"
+                }, {
+                    label: "Over Due", color: "danger",
+                    value: overDue, value2: borrowed, progBar: "false"
+                }, { 
+                    label: "Life Time Borrows", color: "primary",
+                    value: lifeTimeBorrow, progBar: "false" 
+                }, { 
+                    label: "Life Time Reissued", color: "warning", 
+                    value: 0, progBar: "false" 
+                }, { 
+                    label: "Life Time Over Due", color: "danger", 
+                    value: lifeTimeOverDue, progBar: "false" 
+                }, 
             ]
         }) %>
 
@@ -56,20 +69,9 @@
             ],
             table: { 
                 startSlNum: 1,
-                headerList: [ "Book", "Borrowed", "Reissued", "Due", "Returned" ],
-                rowList: [
-                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
-                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
-                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
-                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
-                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
-                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
-                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
-                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
-                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
-                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "-- / -- / ----"],
-                    [ "Able", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "-- / -- / ----"],
-                ]
+                headerList: [ "Book", "Borrowed", "Due", "Returned" ],
+                rowListKeys: [ "title", "lent_at", "due_at", "ret_at", ],
+                rowList: trackers.history,
             }
         } ) %>
 
@@ -77,11 +79,6 @@
     
 </div>
 </div>
-<%- include( "../partials/setEleValByID" ); %>
-
 <body>
-
-    
 </body>
-
 </html>
