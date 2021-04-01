@@ -1,27 +1,26 @@
 
     <link href="/css/table.css" rel="stylesheet" type="text/css">
-<table id="dtDynamicVerticalScrollExample" class="table table-striped table-bordered tableFixHead table-responsive" style="text-align:center; width: 100%">
+<table class="table table-striped table-border tableFixHead table-responsive"  style="text-align:center;">
     <!-- table table-striped table-bordered  -->
     <thead>
-      <tr>
-          <th >#</th>
-          <% headerList.forEach( header => { %>
-              <th><%= header %></th>
-          <% }) %>
-      </tr>
+        <tr>
+            <th >#</th>
+            <% headerList.forEach( header => { %>
+                <th><%= header %></th>
+            <% }) %>
+        </tr>
     </thead>
     <tbody>
         
         <% 
         try {
             rowList.forEach( row => { %>
-
-            <tr class="bg-<%= row.color %>">
-              <th> <%= startSlNum++ %></th>
-                <% rowListKeys.forEach( key => { %>
-                    <td><%= row[ key ] %></td>
-                <% }) %>
-            </tr>
+                <tr class="bg-<%= row.color %>">
+                    <th> <%= startSlNum++ %></th>
+                    <% rowListKeys.forEach( key => { %>
+                        <td><%= row[ key ] %></td>
+                    <% }) %>
+                </tr>
             
         <% }) %>
 

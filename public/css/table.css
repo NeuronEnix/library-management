@@ -1,11 +1,10 @@
 .table-responsive {
     max-height:410px;
 }
-.tableFixHead          { overflow-y: auto; height: 100%; }
+.tableFixHead          { overflow-y: auto;}
 .tableFixHead thead th { position: sticky; top: 0; }
-.tableFixHead tfoot th { position: sticky; bottom: 0; }
 
 /* Just common table stuff. Really. */
-table  { border-collapse: collapse; width: 100%; }
+table  { border-collapse: collapse;}
 th, td { padding: 7px 10px; }
 th     { background:#eee; }
