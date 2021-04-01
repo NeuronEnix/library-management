@@ -1,6 +1,6 @@
 
     <link href="/css/table.css" rel="stylesheet" type="text/css">
-<table id="dtDynamicVerticalScrollExample" class="table table-striped table-bordered tableFixHead table-responsive" style="text-align:center">
+<table id="dtDynamicVerticalScrollExample" class="table table-striped table-bordered tableFixHead table-responsive" style="text-align:center; width: 100%">
     <!-- table table-striped table-bordered  -->
     <thead>
       <tr>
@@ -11,16 +11,24 @@
       </tr>
     </thead>
     <tbody>
-        <% rowList.forEach( row => { %>
+        
+        <% 
+        try {
+            rowList.forEach( row => { %>
 
-            <tr>
+            <tr class="bg-<%= row.color %>">
               <th> <%= startSlNum++ %></th>
-                <% row.forEach( ele => { %>
-                    <td><%= ele %></td>
+                <% rowListKeys.forEach( key => { %>
+                    <td><%= row[ key ] %></td>
                 <% }) %>
             </tr>
             
         <% }) %>
+
+
+        <% } catch ( err ) { %>
+            <h2>No History</h2>
+        <% } %>
 
     </tbody>  
 </table>

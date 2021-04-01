@@ -35,7 +35,7 @@
             const totalAvailable = avail + borrowed;
             const availPercent = (avail * 100 / (totalAvailable || 1) ).toFixed(2);
             const borrowedPercent = (borrowed * 100 / (totalAvailable || 1)).toFixed(2);
-            const overDuePercent = (overDue * 100 / (borrowed || 1) ).toFixed(2);
+            const overDuePercent = (overDue * 100 / (totalAvailable || 1) ).toFixed(2);
         %>
         <%- include( "../partials/progBar", {
             body: [ 
@@ -66,7 +66,7 @@
 
     </div>
 
-    <div class="col"; style="height: 100%">
+    <div class="col"; style="height: 100%; width: 100%;">
 
         <%- include( "../partials/historyCard", {
             checkBoxList: [
@@ -77,20 +77,9 @@
             ],
             table: { 
                 startSlNum: 1,
-                headerList: [ "User", "Borrowed", "Reissued", "Due", "Returned" ],
-                rowList: [
-                    [ "A", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
-                    [ "A", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
-                    [ "A", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
-                    [ "A", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
-                    [ "A", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
-                    [ "A", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
-                    [ "A", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
-                    [ "A", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
-                    [ "A", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "30 / 03 / 2021" ],
-                    [ "A", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "-- / -- / ----"],
-                    [ "A", "13 / 03 / 2021", "20 / 03 / 2021", "30 / 03 / 2021", "-- / -- / ----"],
-                ]
+                headerList: [ "User", "Borrowed", "Due", "Returned" ],
+                rowListKeys: [ "name", "lent_at", "due_at", "ret_at", ],
+                rowList: trackers.history
             }
         } ) %>
 

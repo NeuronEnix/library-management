@@ -1,7 +1,7 @@
 <div class="card-header py-3">
     <h6 class="m-0 font-weight-bold text-primary">History</h6>
 </div>
-<div class="card-body">
+<div class="card-body" style="width: 100%">
     
     <% checkBoxList.forEach( checkBox => {
 
@@ -17,8 +17,8 @@
     <div class="form-check form-check-inline">
         <button type="button" class="btn btn-primary">Refresh</button>
     </div>
-
-    <%- include( "../partials/table", { ...table } ) %>
+    <div class="row justify-content-center" style="width: 100%" ><%- include( "../partials/table", { ...table } ) %></div>
+    
     <div class="row justify-content-center" style="width: 100%" >
 
         <%- include("../partials/pagination", {
