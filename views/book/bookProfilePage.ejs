@@ -30,11 +30,12 @@
     <link href="/css/progBar.css" rel="stylesheet" type="text/css">
 
     <div class="col-md-3">
-        <% const { avail=0, borrowed=0, overDue=0, lifeTimeBorrow=0, lifeTimeOverDue=0 } = trackers;
+        <% const { avail=0, borrowed=0, reissued=0, overDue=0, lifeTimeBorrow=0, lifeTimeOverDue=0 } = trackers;
         // ( variable || 1 ) -> used to avoid division by zero error
             const totalAvailable = avail + borrowed;
             const availPercent = (avail * 100 / (totalAvailable || 1) ).toFixed(2);
             const borrowedPercent = (borrowed * 100 / (totalAvailable || 1)).toFixed(2);
+            const reissuedPercent = (reissued * 100 / (totalAvailable || 1)).toFixed(2);
             const overDuePercent = (overDue * 100 / (totalAvailable || 1) ).toFixed(2);
         %>
         <%- include( "../partials/progBar", {
@@ -47,7 +48,7 @@
                     value: borrowed, value2: totalAvailable, percentage: borrowedPercent, 
                 }, { 
                     label: "Reissued", color: "warning",
-                    value: 30, percentage: 30, 
+                    value: reissued, value2: totalAvailable, percentage: reissuedPercent, 
                 }, { 
                     label: "Over Due", color: "danger",
                     value: overDue, value2: totalAvailable, percentage: overDuePercent, 
