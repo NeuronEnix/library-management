@@ -19,6 +19,30 @@ module.exports = async( req, res, next) => {
             let: { book_id: "$_id" },
             pipeline: [
                 { $match: { $expr: { $eq: [ "$book_id", "$$book_id" ] } } },
+                { $project: { lent_at:1, due_at:1, ret_at:1, sts:1, _id:0 } },
+                { $group: {
+                    _id: null,
+                    lifeTimeBorrow: { $sum: 1 },
+                    lifeTimeOverDue: { $sum: { $cond: [ { $gt: [ "$ret_at", "$due_at" ] }, 1, 0 ] } },
+                    borrowed: { $sum: { $cond: [ { $eq: [ "$sts", "l" ] }, 1, 0 ] } },
+                    overDue: { $sum: { $cond: [
+                        { $and: [
+                            { $eq: [ "$sts", "l" ] },
+                            { $lt: [ "$due_at", new Date() ] },
+                        ]},
+                        1, 0 ], 
+                    }},
+                }},
+            ],
+            as: "trackers",
+        }},
+        { $unwind: { path : "$trackers", preserveNullAndEmptyArrays: true } },
+        { $lookup: { 
+            from: "lends",
+            let: { book_id: "$_id" },
+            pipeline: [
+                { $match: { $expr: { $eq: [ "$book_id", "$$book_id" ] } } },
+                { $project: { lent_at:1, due_at:1, ret_at:1, sts:1, borrower_id:1, _id:0 } },
                 { $sort: { lent_at:-1 } },
                 { $skip: noOfDocToBeSkipped || 0 },
                 { $limit: noOfUserHistoryListPerPage || 20 },
@@ -34,16 +58,6 @@ module.exports = async( req, res, next) => {
                 { $unwind: "$userDoc" },
                 { $group: {
                     _id: null,
-                    lifeTimeBorrow: { $sum: 1 },
-                    lifeTimeOverDue: { $sum: { $cond: [ { $gt: [ "$ret_at", "$due_at" ] }, 1, 0 ] } },
-                    borrowed: { $sum: { $cond: [ { $eq: [ "$sts", "l" ] }, 1, 0 ] } },
-                    overDue: { $sum: { $cond: [
-                        { $and: [
-                            { $eq: [ "$sts", "l" ] },
-                            { $lt: [ "$due_at", new Date() ] },
-                        ]},
-                        1, 0 ] 
-                    }},
                     history: { $push: { 
                         color: {
                             $switch: {
@@ -52,7 +66,7 @@ module.exports = async( req, res, next) => {
                                 { case: { $lt: [ "$due_at", new Date() ] }, then: "danger" },
                             ],
                             default: "primary",
-                            }
+                            },
                         },
                         name: "$userDoc.name",
                         lent_at: { $dateToString: { date: "$lent_at",format: "%d-%m-%Y", timezone: "+05:30", onNull: "NULL" } },
@@ -60,18 +74,16 @@ module.exports = async( req, res, next) => {
                         ret_at: { $dateToString: { date: "$ret_at",format: "%d-%m-%Y", timezone: "+05:30", onNull: "Not Returned" } },
                     }},
                 }},
-                { $project: { _id:0 } },
+                { $unwind: "$history" },
             ],
-            as: "trackers",
+            as: "history",
         }},
-        { $unwind: {
-            path : "$trackers",
-            preserveNullAndEmptyArrays: true
-        } },
-        { $addFields: { "trackers.avail": "$qty" } },
-        { $project: { _id:0, qty:0 } },
+        { $addFields: { "trackers.avail": "$qty", "trackers.history" : "$history.history" } },
+        { $project: { _id:0, qty:0, history:0 } },
     ]);
+
     bookProfileData[0].book_id = req.query.book_id;
+    
     return resRender( res, "book/bookProfilePage", bookProfileData[0] );
 
 }
