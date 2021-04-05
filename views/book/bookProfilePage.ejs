@@ -4,8 +4,8 @@
 <head> <title> LMS - Book Profile</title> </head>
 
 <%- include( "../partials/navbar", { activeNav: "Book" } ) %>
+<%- include("../partials/popup" ) %>
 <div class="row" style="margin-left: 5px;margin-right: 5px">
-    
     <div class="col-md-2.2" >
 
         <%- include( "../partials/infoCard", {
@@ -15,13 +15,29 @@
                 { label: "Author", name: "author", type: "text", disabled: "true", value: author },
                 { label: "Edition", name: "edition", type: "text", disabled: "true", value: edition },
             ],
-            buttons: [
-
-                { label: "Click To Disable", type: "danger", 
-                formaction: "/book/status", formmethod: "post" },
-
-                { label: "Edit", type: "primary", 
-                formaction: "/book/edit", formmethod: "get" },            
+            buttons: [ 
+                {
+                    label: "Click  To  " + (sts == "e" ? "Disable" : "Enable"), color: sts == "e" ? "danger" : "success",
+                    modal: {
+                        modal_id: "book-status-modal",
+                        modal_title: "Confirm To " + (sts == "e" ? "Disable" : "Enable"),
+                        modal_body_id: "book-status-modal-body" ,
+                        modal_body: "Title: " + title ,
+                        modal_submit: {
+                            action: "/book/update-status",
+                            method: "post",
+                            label: sts == "e" ? "Disable" : "Enable",
+                            hiddenFieldList: [ 
+                                { name: "book_id", value: book_id },
+                                { name: "sts", value: sts == "e" ? "d" : "e" },
+                            ],
+                        },
+                    },
+                }, { 
+                    label: "Edit", color: "primary", 
+                    formaction: "/book/edit", formmethod: "get",
+                    hiddenFieldList: [ { name: "book_id", value: book_id } ],
+                },            
             ]
         } ) %>
         

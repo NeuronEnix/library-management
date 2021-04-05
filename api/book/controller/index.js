@@ -1,6 +1,6 @@
 module.exports = {
     addBook: require( "./addBook" ),
-    searchBook: require( "./searchBook" ),
+    updateStatus: require( "./updateStatus" ),
     bookPage: require( "./bookPage" ),
     bookProfilePage: require( "./bookProfilePage" ),
 }

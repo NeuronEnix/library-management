@@ -1,4 +1,5 @@
-<!-- {
+<!-- 
+{
   modal_id: "this-modal-id",
   modal_title: "Modal title",
   modal_body_id: "Modal body" ,
@@ -10,7 +11,8 @@
       { name: "some_id", value: some_id },
     ],
   },
-} -->
+}
+ -->
 <!-- Modal -->
 <div 
   class="modal fade" 
@@ -31,7 +33,7 @@
           </button>
         </div>
         <div class="modal-body" id="<%= typeof modal_body_id != 'undefined' ? modal_body_id : 'modal_body_id' %>" >
-          
+          <%= typeof modal_body != 'undefined' ? modal_body: "" %>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

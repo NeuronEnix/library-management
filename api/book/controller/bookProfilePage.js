@@ -20,7 +20,7 @@ module.exports = async( req, res, next) => {
 
     const bookProfileData = await BookModel.aggregate([
         { $match: { _id: mongoose.Types.ObjectId( book_id ) } },
-        { $project: { _id:1, qty:1, author:1, title:1, edition:1 } },
+        { $project: { _id:1, qty:1, author:1, title:1, edition:1, sts:1 } },
         { $lookup: {
             from: "lends",
             let: { book_id: "$_id" },
@@ -94,10 +94,13 @@ module.exports = async( req, res, next) => {
     ]);
 
     bookProfileData[0].book_id = book_id;
-    
-    return resRender( res, "book/bookProfilePage", { 
+    const dataToBeSent =  { 
         pg, ...bookProfileData[0],
         filter: { borrowed, reissued, overDue, returned } 
-    });
+    };
+    if ( req.query.popTyp ) dataToBeSent.popup = {
+        typ: req.query.popTyp, msg:req.query.popMsg
+    }
+    return resRender( res, "book/bookProfilePage", dataToBeSent );
 
 }

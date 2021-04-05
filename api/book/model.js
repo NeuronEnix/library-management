@@ -12,6 +12,7 @@ let bookSchema = new mongoose.Schema ({
     qty: { type: Number, default:0 },
     lend_price: { type: Number, required: true },
     user_id: { type: ObjectId, ref: "users", required: true }, // user who adds the book
+    sts: { type: String, default: "e" }, // e->enabled, d->disabled
 });
 
 bookSchema.index( { title:1, author:1, edition: 1 }, { unique: true } );
@@ -41,5 +42,4 @@ bookSchema.statics.searchBook = async ( pg, title, author = "", edition = undefi
 
 const BookModel = mongoose.model( 'books', bookSchema ) ;
 module.exports = BookModel;
-
 

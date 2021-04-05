@@ -30,19 +30,26 @@
                 <% }) %>
             </ul>
         </div>
-        <form>
-            <div class="row">
-                <% buttons.forEach( ( val ) => { %>
-                    <div class="col" style= "width: 50%; padding:0px; margin-left: 1px;">
-                        <a type="submit" class="float-right btn btn-<%= val.type %>" 
-                            formaction ="<%= val.formaction %>"
-                            formmethod ="<%= val.formmethod %>">
-                            <%= val.label %>
-                        </a>
-                    </div>
-                <% }) %>
-            </div>
-        </form>
+        <div class="row">
+            <% buttons.forEach( ( val ) => { %>
+                <div class="col" style= "width: 50%; padding:0px; margin-left: 1px;">
+                    <% if( val.modal ) { %>
+                        <button type="button" class="btn btn-<%= val.color %>" data-toggle="modal" data-target="#<%= val.modal.modal_id %>"> <%= val.label %></button>                      
+                        <%- include( './modal', val.modal ) %>
+                    <% } else { %>
+                        <form>
+                            <%- include( "./hiddenField", { hiddenFieldList: val.hiddenFieldList } ) %>
+                            <a type="submit" class="float-right btn btn-<%= val.color %>" 
+                                formaction ="<%= val.formaction %>"
+                                formmethod ="<%= val.formmethod %>">
+                                <%= val.label %>
+                            </a>
+                        </form>
+                    <% } %>
+                </div>
+
+            <% }) %>
+        </div>
     </div>
 
 </div>
