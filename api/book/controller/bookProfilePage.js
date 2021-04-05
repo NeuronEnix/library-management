@@ -3,19 +3,20 @@ const BookModel = require( "../model" );
 const LendModel = require( "../../lend/model" );
 
 const { noOfUserHistoryListPerPage } = require( "../../../config").book;
-
+const { evaluatePageNo } = require( "../../../handler").pagination;
 const { resRender } = require( "../../../handler").resHandler;
 
 module.exports = async( req, res, next) => {
 
-    const { pg = 0, book_id } = req.query;
+    const { book_id } = req.query;
+
+    const pg = evaluatePageNo( req.query.pg, req.query.pgAction );
+    const noOfDocToBeSkipped = pg * noOfUserHistoryListPerPage;
     
     let { borrowed, reissued, overDue, returned } = req.query;
 
     const allTheFilter = borrowed || reissued || overDue || returned;
     if ( allTheFilter === undefined ) borrowed = reissued = overDue = returned = 'on';
-    
-    const noOfDocToBeSkipped = pg * noOfUserHistoryListPerPage;
 
     const bookProfileData = await BookModel.aggregate([
         { $match: { _id: mongoose.Types.ObjectId( book_id ) } },
@@ -92,7 +93,7 @@ module.exports = async( req, res, next) => {
     bookProfileData[0].book_id = book_id;
     
     return resRender( res, "book/bookProfilePage", { 
-        ...bookProfileData[0],
+        pg, ...bookProfileData[0],
         filter: { borrowed, reissued, overDue, returned } },
     );
 

@@ -87,6 +87,21 @@
             }
         } ) %>
 
+        <div class="row justify-content-center" style="width: 100%" >
+            <%- include("../partials/pagination", {
+              pg,
+              eleCount: trackers.history.length,
+              maxEleCount: 20, 
+              hiddenFieldList: [
+                { name: "borrowed", value: filter.borrowed },
+                { name: "reissued", value: filter.reissued },
+                { name: "overDue",  value: filter.overDue  },
+                { name: "returned", value: filter.returned },
+                { name: "book_id", value: book_id },
+              ],
+            }); %> 
+          </div>
+
     </div>
     
 </div>

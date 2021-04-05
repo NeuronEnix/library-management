@@ -29,7 +29,7 @@
       <% } %>
       
     <% } else { %>
-      <h4> <%= onEmpty %> </h4>
+      <h4> <%= typeof onEmpty !== 'undefined' ? onEmpty : '' %></h4>
     <% } %>
 
   </ul>

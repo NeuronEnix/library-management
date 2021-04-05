@@ -2,14 +2,12 @@ const UserModel = require( "../model" );
 
 const { resRender } = require( "../../../handler").resHandler;
 const { noOfUserListPerPage } = require( "../../../config").user;
+const { evaluatePageNo } = require( "../../../handler").pagination;
 
 module.exports = async( req, res, next) => {
-    let { pg, pgAction, email="" } = req.query;
+    const { email="" } = req.query;
 
-    pg = pg ? parseInt( pg ) : 0;
-    if ( pgAction === "next" ) ++pg;
-    else if ( pgAction === "prev" && pg > 0 ) --pg;
-
+    const pg = evaluatePageNo( req.query.pg, req.query.pgAction );
     const noOfDocToBeSkipped = pg * noOfUserListPerPage;
 
     const userData = UserModel.aggregate([
