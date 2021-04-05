@@ -68,17 +68,16 @@
     </div>
 
     <div class="col"; style="height: 100%; width: 100%;">
-
         <%- include( "../partials/historyCard", {
             refreshAction: "/book/profile",
             hiddenFieldList: [
                 { name: "book_id", value: book_id },
             ],
             checkBoxList: [
-                { label: "Borrowed", id: "borrowed", name: "borrowed", color: "primary", checked: true },
-                { label: "Reissued", id: "reissued", name: "reissued", color: "warning", checked: true },
-                { label: "Over Due", id: "overDue",  name: "overDue",  color: "danger",  checked: true },
-                { label: "Returned", id: "returned", name: "returned", color: "success", checked: true },
+                { label: "Borrowed", id: "borrowed", name: "borrowed", color: "primary", checked: filter.borrowed },
+                { label: "Reissued", id: "reissued", name: "reissued", color: "warning", checked: filter.reissued },
+                { label: "Over Due", id: "overDue",  name: "overDue",  color: "danger",  checked: filter.overDue },
+                { label: "Returned", id: "returned", name: "returned", color: "success", checked: filter.returned },
             ],
             table: { 
                 startSlNum: 1,

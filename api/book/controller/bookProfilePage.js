@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const BookModel = require( "../model" );
+const LendModel = require( "../../lend/model" );
 
 const { noOfUserHistoryListPerPage } = require( "../../../config").book;
 
@@ -8,7 +9,12 @@ const { resRender } = require( "../../../handler").resHandler;
 module.exports = async( req, res, next) => {
 
     const { pg = 0, book_id } = req.query;
+    
+    let { borrowed, reissued, overDue, returned } = req.query;
 
+    const allTheFilter = borrowed || reissued || overDue || returned;
+    if ( allTheFilter === undefined ) borrowed = reissued = overDue = returned = 'on';
+    
     const noOfDocToBeSkipped = pg * noOfUserHistoryListPerPage;
 
     const bookProfileData = await BookModel.aggregate([
@@ -42,7 +48,7 @@ module.exports = async( req, res, next) => {
             from: "lends",
             let: { book_id: "$_id" },
             pipeline: [
-                { $match: { $expr: { $eq: [ "$book_id", "$$book_id" ] } } },
+                { $match: LendModel.getMatchFilter( { borrowed, reissued, overDue, returned } ) },
                 { $project: { lent_at:1, due_at:1, ret_at:1, sts:1, borrower_id:1, _id:0 } },
                 { $sort: { lent_at:-1 } },
                 { $skip: noOfDocToBeSkipped || 0 },
@@ -85,6 +91,9 @@ module.exports = async( req, res, next) => {
 
     bookProfileData[0].book_id = book_id;
     
-    return resRender( res, "book/bookProfilePage", bookProfileData[0] );
+    return resRender( res, "book/bookProfilePage", { 
+        ...bookProfileData[0],
+        filter: { borrowed, reissued, overDue, returned } },
+    );
 
 }
