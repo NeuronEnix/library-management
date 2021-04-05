@@ -13,13 +13,15 @@ module.exports = {
         noOfUserListPerPage: 8,
         noOfBookHistoryListPerPage: 20,
     },
+
+    lend: { 
+        noOfReturnBookListPerPage: 8,
+        maxBookLendPerUser: 5,
+    },
     
     book: {
         noOfBookListPerPage: 8,
         noOfUserHistoryListPerPage: 20,
     },
 
-    lend: {
-        maxBookLendPerUser: 5,
-    },
 }

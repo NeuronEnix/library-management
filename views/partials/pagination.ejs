@@ -1,27 +1,37 @@
-
 <nav aria-label="Page navigation example">
-    <ul class="pagination">
+<!-- 
+{
+  pg: 0,
+  eleCount: 3,
+  maxEleCount: 8, 
+  hiddenFieldList: [ { name: "", value: "" }, ],
+  onEmpty: "No Match Message",
+}
+ -->
+<form>
+  <% hiddenFieldList.push(
+    { name:"pg", value: pg },
+    { name: ""}
+  ); %>
+  <%- include( "../partials/hiddenField", { hiddenFieldList } ); %>
+
+  <ul class="pagination">
+    <% if ( eleCount > 0 ) { %>
+      
       <% if ( pg > 0 ) { %>
-        <li class="page-item"><a class="page-link" onclick="onClickPagination( 'prev' )" >Previous</a></li>
+        <li class="page-item"><button type="submit" name="pgAction" value="prev" class="btn btn-secondary page-link" >Previous</button></li>
       <% } %>
+  
       <li class="page-item"><a class="page-link"><%= parseInt(pg)+1 %></a></li>
-      <% if ( eleCount > 0 ) { %>
-        <li class="page-item"><a class="page-link" onclick="onClickPagination( 'next' )" >Next</a></li>
+  
+      <% if ( eleCount >= maxEleCount ) { %>
+        <li class="page-item"><button type="submit" name="pgAction" value="next" class="btn btn-secondary page-link" >Next</button></li>
       <% } %>
-    </ul>
-  </nav>
+      
+    <% } else { %>
+      <h4> <%= onEmpty %> </h4>
+    <% } %>
 
-<script>
-  
-  function onClickPagination( clickedItem ) {
-    
-    switch ( clickedItem ) {
-      case 'prev': document.getElementById( "pageNo" ).value = "<%= pg - 1 %>"; break;
-      case 'next': document.getElementById( "pageNo" ).value = "<%= pg + 1 %>"; break;
-    }
-
-    document.getElementById( "<%= form_id %>" ).submit();
-
-  }
-  
-</script>
+  </ul>
+</form>
+</nav>

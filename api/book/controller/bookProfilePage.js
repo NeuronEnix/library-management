@@ -7,12 +7,12 @@ const { resRender } = require( "../../../handler").resHandler;
 
 module.exports = async( req, res, next) => {
 
-    const { pg = 0 } = req.query;
+    const { pg = 0, book_id } = req.query;
 
     const noOfDocToBeSkipped = pg * noOfUserHistoryListPerPage;
 
     const bookProfileData = await BookModel.aggregate([
-        { $match: { _id: mongoose.Types.ObjectId( req.query.book_id ) } },
+        { $match: { _id: mongoose.Types.ObjectId( book_id ) } },
         { $project: { _id:1, qty:1, author:1, title:1, edition:1 } },
         { $lookup: {
             from: "lends",
@@ -33,6 +33,7 @@ module.exports = async( req, res, next) => {
                         1, 0 ], 
                     }},
                 }},
+                { $project: { _id:0 } },
             ],
             as: "trackers",
         }},
@@ -82,7 +83,7 @@ module.exports = async( req, res, next) => {
         { $project: { _id:0, qty:0, history:0 } },
     ]);
 
-    bookProfileData[0].book_id = req.query.book_id;
+    bookProfileData[0].book_id = book_id;
     
     return resRender( res, "book/bookProfilePage", bookProfileData[0] );
 

@@ -1,0 +1,47 @@
+<!-- {
+    title: "Card Title",
+    subtitleList: [ "Sub1: Subtitle a", "Sub2: Subtitle b", ],
+    bodyColorList: [ "yellow", "red", ],
+    bodyList: [
+        [ "Header1", "Header2" ],
+        [ "Value 1", "Value 2" ],
+        [ ".......", "......." ],
+    ],
+    buttonList: [
+        { 
+            label: "Button Label",
+            action: "/path",
+            method: "post",
+            hiddenFieldList: ( see "/partials/hiddenFieldList" )
+        }
+    ]
+}; -->
+
+<div class="card" style="width: 100%;">
+    <div class="card-body">
+
+        <h5 class="card-title" style="color: Orange;"> <%= title %> </h5>
+
+        <% subtitleList.forEach( subtitle => { %>
+        <h6 class="card-subtitle mb-2 text-muted"><%= subtitle %> </h6>  
+        <% }) %>
+
+        <% bodyList.forEach( body => { %>
+        <div class="row">
+            <% body.forEach( ( bodyEle, i ) => { %>
+                <div class="col" style="color: <%= bodyColorList[ i ] %>;"> <%= bodyEle %> </div>
+            <% }) %>
+        </div>
+        <% }) %>
+        
+        <div class="row">
+        <% buttonList.forEach( btn => { %>
+            <form method="<%= btn.method %>" action="<%= btn.action %>">
+                <%- include( "../partials/hiddenField", { hiddenFieldList: btn.hiddenFieldList } ) %>
+                <button class="btn btn-link" type="submit" > <%= btn.label %></button>  
+            </form>
+        <% }) %>
+        </div>
+
+    </div>
+</div>

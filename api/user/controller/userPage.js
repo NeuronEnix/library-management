@@ -1,11 +1,14 @@
 const UserModel = require( "../model" );
-const { resRender } = require( "../../../handler").resHandler;
 
+const { resRender } = require( "../../../handler").resHandler;
 const { noOfUserListPerPage } = require( "../../../config").user;
 
 module.exports = async( req, res, next) => {
-    req.query.pg = req.query.pg ? parseInt( req.query.pg ) : 0;
-    const { pg, email } = req.query;
+    let { pg, pgAction, email="" } = req.query;
+
+    pg = pg ? parseInt( pg ) : 0;
+    if ( pgAction === "next" ) ++pg;
+    else if ( pgAction === "prev" && pg > 0 ) --pg;
 
     const noOfDocToBeSkipped = pg * noOfUserListPerPage;
 
@@ -39,19 +42,13 @@ module.exports = async( req, res, next) => {
             preserveNullAndEmptyArrays: true
         } },
 
-        { $project: { _id:0, user_id: "$_id", name:1, email:1, contact:1, trackers:1, } },
+        { $project: { _id:0, user_id: "$_id", name:1, email:1, contact:1, trackers: { $ifNull: [ "$trackers", { borrowed:0, overDue:0 } ] }, } },
     ])
 
     
     return resRender( res, "user/userPage", {
-        userMiniCardData: await userData,
-        userMiniCardButtons: [
-            { method: "get", action: "/book", label: "Lend" },
-            { method: "get", action: "/book/return", label: "Return" },
-            { method: "get", action: "/user/profile", label: "View" },
-        ],
-        eleKeyValPair: req.query,
-        pg: req.query.pg
+        pg, email,
+        miniCardDataList: await userData,
     });
 
 }

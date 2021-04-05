@@ -1,22 +1,34 @@
 const BookModel = require( "../model" );
 
-const { resOk, resRender } = require( "../../../handler").resHandler;
+const { resRender } = require( "../../../handler").resHandler;
+const { noOfBookListPerPage } = require( "../../../config").book;
 
 module.exports = async( req, res, next) => {
-    req.query.pg = req.query.pg ? parseInt( req.query.pg ) : 0;
-    const { pg, title, author, edition, redirectURL } = req.query;
+    let { pg, pgAction, title, author, edition, } = req.query;
     
+    pg = pg ? parseInt( pg ) : 0;
+    if ( pgAction === "next" ) ++pg;
+    else if ( pgAction === "prev" && pg > 0 ) --pg;
+    
+    const noOfDocToBeSkipped = pg * noOfBookListPerPage;
+
+    const filter = {};
+    if ( title ) filter.title = new RegExp( title.split("").join(".*"), "i" );
+    if ( author ) filter.author = new RegExp( author.split("").join(".*"), "i" );
+    if ( edition ) filter.edition = parseInt( edition );
+
+    const searchData = await BookModel.aggregate([
+        { $match: filter },
+        { $sort: { title:1 } },
+        { $skip: noOfDocToBeSkipped || 0 },
+        { $limit: noOfBookListPerPage || 10 },
+        { $addFields: { book_id: "$_id" } },
+        { $project: { _id:0, author:1, title:1, edition:1, book_id:1, qty:1 } }
+    ]);
 
     return resRender( res, "book/bookPage", {
-        bookMiniCardData: await BookModel.searchBook( pg, title, author, edition ),
-        bookMiniCardButtons: [
-            { method: "get", action: "/book/lend", label: "Lend" },
-            { method: "get", action: "/book/return", label: "Return" },
-            { method: "get", action: "/book/profile", label: "View" },
-            { method: "get", action: "/book/purchase", label: "Purchase" },
-        ],
-        eleKeyValPair: req.query,
-        pg: req.query.pg
+        pg, title, author, edition,
+        miniCardDataList: searchData,
     });
 
 }

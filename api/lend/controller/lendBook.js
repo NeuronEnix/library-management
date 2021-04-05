@@ -1,7 +1,7 @@
 const LendModel = require( "../model" );
 const { BookModel } = require( "../../book");
 const { UserModel } = require( "../../user" );
-const { resOk, resErr, resErrType, resRender } = require( "../../../handler").resHandler;
+const { resErr, resErrType, resRender } = require( "../../../handler").resHandler;
 
 const { maxBookLendPerUser } = require( "../../../config").lend
 
@@ -44,7 +44,7 @@ module.exports = async ( req, res, next ) => {
         
         const popup = { typ: "success", msg: "Book Lent!" };
         return resRender( res, "borrower/lendBookPage", {
-            popup, ...req.body, disableEmail: true, eleKeyValPair: { email: req.body.email } 
+            popup, ...req.body, disableInput: true, 
         });
         
         // return resOk( res, lendDoc );

@@ -5,13 +5,6 @@
 
       <%- include("../partials/popup" ) %>
 
-        <form action="/book/purchase" method="post">
-
-          <input type="hidden" name="book_id" value="<%= book_id %>">
-          <input type="hidden" name="title" value="<%= title %>">
-          <input type="hidden" name="author" value="<%= author %>">
-          <input type="hidden" name="edition" value="<%= edition %>">
-          
           <div class="purchase-book-component" style="margin-left: 2%">
 
             <!-- First Row: Borrower Seller Name-->
@@ -34,6 +27,7 @@
                         name:"seller",
                         id:"seller",
                         type:"text",
+                        value: typeof seller != "undefined" ? seller : "",
                         disabled: typeof disableInput != 'undefined' ? disableInput : 'false'
                       } );%>
                     </div>
@@ -44,6 +38,7 @@
                         name:"qty",
                         id:"qty",
                         type:"number",
+                        value: typeof qty != "undefined" ? qty : "",
                         disabled: typeof disableInput != 'undefined' ? disableInput : 'false'
                       } );%>
                     </div>
@@ -53,12 +48,25 @@
 
                       <button class="btn btn-danger" type="button"  onclick="window.location='/book';return false;" style="margin-right: 10px;"> Cancel</button>
                       
-                      <button type="button" class="btn btn-primary" onclick= "purchaseBookModalMaker()" data-toggle="modal" data-target="#confirm_purchase_modal_id"> Purchase Book </button>                      
+                      <button type="button" class="btn btn-primary" onclick= "purchaseBookModalMaker()" data-toggle="modal" data-target="#purchase-modal"> Purchase Book </button>                      
                       
                       <%- include( "../partials/modal", {
-                        modal_id: "confirm_purchase_modal_id",
+                        modal_id: "purchase-modal",
                         modal_title: "Purchase Book: " + title,
-                        modal_body_id: "confirm_purchase_modal_body_id" 
+                        modal_body_id: "purchase-modal-body" ,
+                        modal_submit: {
+                          action: "/book/purchase",
+                          method: "post",
+                          label: "Confirm",
+                          hiddenFieldList: [
+                            { name: "book_id", value: book_id },
+                            { name: "title", value: title },
+                            { name: "author", value: author },
+                            { name: "edition", value: edition },
+                            { name: "seller", value:"", id:"purchase-modal-seller" },
+                            { name: "qty", value: "", id:"purchase-modal-qty" },
+                          ],
+                        },
                       } ) %>
                       
                     </div>
@@ -73,11 +81,11 @@
             
           </div>
 
-          </form>
-          <%- include( "../partials/setEleValByID" ) %>
           <script type="text/javascript">
             function purchaseBookModalMaker() {
-              document.getElementById( "confirm_purchase_modal_body_id" ).innerHTML = "Seller: " + document.getElementById( "seller" ).value + "<br />" + "Quantity: " + document.getElementById( "qty" ).value;
+              document.getElementById( "purchase-modal-body" ).innerHTML = "Seller: " + document.getElementById( "seller" ).value + "<br />" + "Quantity: " + document.getElementById( "qty" ).value;
+              document.getElementById( "purchase-modal-seller" ).value = document.getElementById( "seller" ).value ;
+              document.getElementById( "purchase-modal-qty" ).value = document.getElementById( "qty" ).value ;
             }
           </script>
     </body>

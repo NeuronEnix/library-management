@@ -5,11 +5,7 @@ const { resRender } = require( "../../handler" ).resHandler;
 const { isAuthenticated } = require( "../../handler").sessionHandler;
 
 router.post( "/lend", controller.lendBook );
-router.get( "/lend", ( req, res ) => {
-    resRender( res, "borrower/lendBookPage", {
-        ...req.query
-    });
-} );
+router.get( "/lend",  controller.lendBookPage );
 
 router.post( "/return", controller.returnBook );
 

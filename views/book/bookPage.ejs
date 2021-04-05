@@ -1,96 +1,106 @@
 <html>
-    <title>LMS - Book</title>
-    <body>
-      <%- include("../partials/navbar", { activeNav: "Book" } ) %>
+  <title>LMS - Book</title>
+  <body>
 
-      <%- include("../partials/popup" ) %>
-      <!-- <link href="/css/book/addBook.css" rel="stylesheet" type="text/css"> -->
+    <%- include("../partials/navbar", { activeNav: "Book" } ) %>
+    <%- include("../partials/popup" ) %>
 
-        <form id="search_form" action="/book" method="get" >
-          <input type="hidden" name="pg" id="pageNo" value="0">
-          <div class="add-book-component" style="margin-left: 2%">
+    <form id="search_form" action="/book" method="get" >
+      <div class="add-book-component" style="margin-left: 2%">
 
-            <!-- First Row: Book Title, Author Name, Edition Number-->
-            <div class="form-row" >
+          <!-- First Row: Book Title, Author Name, Edition Number-->
+        <div class="form-row" >
 
-              <!-- Book Title -->
-              <div class="form-group col-md-4" >
-                <%- include( "../partials/inputField", {
-                  labelName: "Book Title",
-                  name:"title",
-                  type:"text",
-                  required: "false"
-                } );%>
-              </div>
-
-              <!-- Author Name -->
-              <div class="form-group col-md-3" style="margin-left: 10px;margin-right: 10px" >
-                <%- include( "../partials/inputField", {
-                  labelName: "Author Name",
-                  name:"author",
-                  type:"text",
-                  required:"false"
-                } );%>
-              </div>
-
-              <!-- Edition Number -->
-              <div class="form-group col-md-2" >
-                <%- include( "../partials/inputField", {
-                  labelName: "Edition Number",
-                  name:"edition",
-                  type:"number",
-                  required:"false"
-                } );%>
-              </div>
-              <input type="hidden" name="redirectURL" value="book/bookPage">
-
-              <div class="form-group col-md-1" >
-                <button type="submit" class="btn btn-primary">Search</button>
-              </div>
-
-              <div class="form-group col-md-1" >
-                <button type="submit" class="btn btn-secondary" formaction="/book/add" formmethod="get">Add Book</button>
-              </div>
-
-            </div>
-            
-            
+          <!-- Book Title -->
+          <div class="form-group col-md-4" >
+            <%- include( "../partials/inputField", {
+              labelName: "Book Title", name:"title", type:"text",
+              value: title, required: "false",
+            } );%>
           </div>
-          </form>
-          <div class="row" style="margin-left: 5px; margin-right: 5px; width: 100%;">
-            <% if( typeof bookMiniCardData != 'undefined' ) {
-              bookMiniCardData.forEach( ( val, i ) => { 
 
-                if ( i%4 === 0  ) {
+          <!-- Author Name -->
+          <div class="form-group col-md-3" style="margin-left: 10px;margin-right: 10px" >
+            <%- include( "../partials/inputField", {
+              labelName: "Author Name", name:"author", type:"text",
+              value: author, required:"false"
+            } );%>
+          </div>
 
-                  if ( i != 0 ) { %>
-                    </div>
-                  <% } %>
-                <div class="row" style="width: 100%">
-                  
-              <% } %>
-              <div class="col-md-3"> <%- include("../partials/bookMiniCard", { val, buttons: bookMiniCardButtons, hiddenFieldNameList: [ 'title', 'author', 'edition', 'book_id' ]  } ); %> </div>
-            <% } ) %> 
-                  </div>
-            <% } %>
+          <!-- Edition Number -->
+          <div class="form-group col-md-2" >
+            <%- include( "../partials/inputField", {
+              labelName: "Edition Number", name:"edition", type:"number",
+              value: edition, required:"false"
+            } );%>
+          </div>
+
+          <div class="form-group col-md-1" >
+            <button type="submit" class="btn btn-primary">Search</button>
+          </div>
+
+          <div class="form-group col-md-1" >
+            <button type="submit" class="btn btn-secondary" formaction="/book/add" formmethod="get">Add Book</button>
+          </div>
+
+        </div>
+
+      </div>
+    </form>
+
+    <div class="row" style="margin-left: 5px; margin-right: 5px; width: 100%;">
+
+      <% for ( let i=0; i<miniCardDataList.length; ) { %>
+        <div class="row" style="width: 100%">
+          <% for ( let j=0; j<4 && i<miniCardDataList.length; ++j, ++i ) { %>
+            <div class="col-md-3"> 
+              <% const cardData = miniCardDataList[i] %>
               
+              <%- include( "../partials/miniCard", {
+
+                title: cardData.title,
+                subtitleList: [
+                  "By: " + cardData.author,
+                  "Edition: " + cardData.edition,
+                ],
+                bodyColorList: [ "green", "red" ],
+                bodyList: [
+                  [ "Avail", "Lent" ],
+                  [ cardData.qty, 0 ],
+                ],
+                buttonList: [
+                  { method: "get", action: "/book/lend",     label: "Lend",     hiddenFieldList: [ { name: "book_id", value: cardData.book_id } ] },
+                  { method: "get", action: "/book/profile",  label: "View",     hiddenFieldList: [ { name: "book_id", value: cardData.book_id } ] },
+                  { method: "get", action: "/book/purchase", label: "Purchase",
+                    hiddenFieldList: [
+                    { name: "book_id", value: cardData.book_id },
+                    { name: "title", value: cardData.title },
+                    { name: "author", value: cardData.author },
+                    { name: "edition", value: cardData.edition },
+                    ],
+                  },
+                ],
+
+              } ); %>
+              
+            </div>
+          <% } %>
+        </div>
+      <% } %>
+    </div>
  
-            <div class="row justify-content-center" style="width: 100%" >
-              <% if( typeof bookMiniCardData == 'undefined' || bookMiniCardData.length == 0 ) { %>
-                <h4> No Books Matched </h4>
-              <% } else { %>
-                <%- include("../partials/pagination", {
-                  pg,
-                  eleCount: bookMiniCardData.length,
-                  form_id: "search_form"
-                }); %> 
-              <% } %>
-            </div>
-              
-
-
-          </div>
-          <%- include( "../partials/setEleValByID" ) %>
-
-    </body>
+    <div class="row justify-content-center" style="width: 100%" >
+      <%- include("../partials/pagination", {
+        pg,
+        eleCount: miniCardDataList.length,
+        maxEleCount: 8, 
+        hiddenFieldList: [
+          { name: "title", value: typeof title !== "undefined" ? title : "" },
+          { name: "author", value: typeof author !== "undefined" ? author : "" },
+          { name: "edition", value: typeof edition !== "undefined" ? edition : "" },
+        ],
+        onEmpty: "No Books Matched",
+      }); %> 
+    </div>
+  </body>
 </html>

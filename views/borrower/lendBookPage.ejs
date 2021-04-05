@@ -5,13 +5,6 @@
 
       <%- include("../partials/popup" ) %>
 
-        <form action="/book/lend" method="post">
-
-          <input type="hidden" name="book_id" value="<%= book_id %>">
-          <input type="hidden" name="title" value="<%= title %>">
-          <input type="hidden" name="author" value="<%= author %>">
-          <input type="hidden" name="edition" value="<%= edition %>">
-          
           <div class="lend-book-component" style="margin-left: 2%">
 
             <!-- First Row: Borrower Email-->
@@ -24,9 +17,9 @@
 
                   <div class="card-body">
                     
-                    <h5  class="card-title" style="color: Orange;"> Lending Book: <%= typeof title != 'undefined' ? title : 'None' %> </h5>
-                    <h6  class="card-subtitle mb-2 text-muted"> By: <%= typeof author != 'undefined' ? author : 'None' %> </h6>
-                    <h6  class="card-subtitle mb-2 text-muted"> Edition: <%= typeof edition != 'undefined' ? edition : 'None' %> </h6>
+                    <h5  class="card-title" style="color: Orange;"> Lending Book: <%= title %> </h5>
+                    <h6  class="card-subtitle mb-2 text-muted"> By: <%= author %> </h6>
+                    <h6  class="card-subtitle mb-2 text-muted"> Edition: <%= edition %> </h6>
 
                     <div class="row">
                       <%- include( "../partials/inputField", {
@@ -34,20 +27,32 @@
                         name:"email",
                         id:"email",
                         type:"text",
-                        disabled: typeof disableEmail != 'undefined' ? disableEmail : 'false'
+                        value: typeof email != "undefined" ? email : "",
+                        disabled: typeof disableInput != 'undefined' ? disableInput : 'false'
                       } );%>
                     </div>
-                    <% if ( typeof disableEmail == "undefined" ) { %>
+                    <% if ( typeof disableInput == "undefined" ) { %>
                     <div class="row float-right">
 
-                      <button class="btn btn-danger" type="submit" formmethod="get" formaction="/book" style="margin-right: 10px;"> Cancel</button>
+                      <button class="btn btn-danger" type="button"  onclick="window.location='/book';return false;" style="margin-right: 10px;"> Cancel</button>
                       
                       <button type="button" class="btn btn-primary" onclick= "lendBookModalMaker()" data-toggle="modal" data-target="#confirm_lending_modal_id"> Lend Book </button>                      
-                      
                       <%- include( "../partials/modal", {
                         modal_id: "confirm_lending_modal_id",
                         modal_title: "Lending Book: " + title,
-                        modal_body_id: "confirm_lending_modal_body_id" 
+                        modal_body_id: "confirm_lending_modal_body_id" ,
+                        modal_submit: {
+                          action: "/book/lend",
+                          method: "post",
+                          label: "Confirm",
+                          hiddenFieldList: [
+                            { name: "book_id", value: _id },
+                            { name: "title", value: title },
+                            { name: "author", value: author },
+                            { name: "edition", value: edition },
+                            { name: "email", value: "", id: "confirm-modal-email" },
+                          ],
+                        },
                       } ) %>
                       
                     </div>
@@ -62,11 +67,10 @@
             
           </div>
 
-          </form>
-          <%- include( "../partials/setEleValByID" ) %>
           <script type="text/javascript">
             function lendBookModalMaker() {
               document.getElementById( "confirm_lending_modal_body_id" ).innerHTML = "To: " + document.getElementById( "email" ).value ;
+              document.getElementById( "confirm-modal-email" ).value = document.getElementById( "email" ).value ;
             }
           </script>
     </body>

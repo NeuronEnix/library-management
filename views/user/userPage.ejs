@@ -6,7 +6,6 @@
       <%- include("../partials/popup" ) %>
 
         <form id="search_form" action="/user" method="get" >
-          <input type="hidden" name="pg" id="pageNo" value="0">
           <div class="user-component" style="margin-left: 2%">
 
             <!-- First Row: Email-->
@@ -18,12 +17,11 @@
                   labelName: "Email",
                   name:"email",
                   type:"text",
+                  value: email,
                   required: "false"
                 } );%>
               </div>
-
-              <input type="hidden" name="redirectURL" value="user/userPage">
-
+              
               <div class="form-group col-md-1" >
                 <button type="submit" class="btn btn-primary">Search</button>
               </div>
@@ -37,40 +35,53 @@
             
           </div>
           </form>
+
           <div class="row" style="margin-left: 5px; margin-right: 5px; width: 100%;">
-            <% if( typeof userMiniCardData != 'undefined' ) {
-              userMiniCardData.forEach( ( val, i ) => { 
 
-                if ( i%4 === 0  ) {
-
-                  if ( i != 0 ) { %>
-                    </div>
-                  <% } %>
-                <div class="row" style="width: 100%">
-                  
-              <% } %>
-              <div class="col-md-3"> <%- include("../partials/userMiniCard", { val, buttons: userMiniCardButtons, hiddenFieldNameList: [ 'email', 'name', 'contact', "user_id" ]  } ); %> </div>
-            <% } ) %> 
+            <% for ( let i=0; i<miniCardDataList.length; ) { %>
+              <div class="row" style="width: 100%">
+                <% for ( let j=0; j<4 && i<miniCardDataList.length; ++j, ++i ) { %>
+                  <div class="col-md-3"> 
+                    <% const cardData = miniCardDataList[i] %>
+                    
+                    <%- include( "../partials/miniCard", {
+      
+                      title: cardData.email,
+                      subtitleList: [
+                        "Name: " + cardData.name,
+                        "Contact: " + cardData.contact,
+                      ],
+                      bodyColorList: [ "green", "red" ],
+                      bodyList: [
+                        [ "Borrowed", "Over Due" ],
+                        [ cardData.trackers.borrowed, cardData.trackers.overDue ],
+                      ],
+                      buttonList: [
+                        { method: "get", action: "/book/return",  label: "Return",   hiddenFieldList: [ { name: "email", value: cardData.email } ] },
+                        { method: "get", action: "/user/profile", label: "View",     hiddenFieldList: [ { name: "user_id", value: cardData.user_id } ] },
+                      ],
+      
+                    } ); %>
+                    
                   </div>
+                <% } %>
+              </div>
             <% } %>
-              
- 
+          </div>
+        
             <div class="row justify-content-center" style="width: 100%" >
-              <% if( typeof userMiniCardData == 'undefined' || userMiniCardData.length == 0 ) { %>
-                <h4> No User Matched </h4>
-              <% } else { %>
-                <%- include("../partials/pagination", {
-                  pg,
-                  eleCount: userMiniCardData.length,
-                  form_id: "search_form"
-                }); %> 
-              <% } %>
+              <%- include("../partials/pagination", {
+                pg,
+                eleCount: miniCardDataList.length,
+                maxEleCount: 8, 
+                hiddenFieldList: [
+                  { name: "email", value: typeof email !== "undefined" ? email : "" },
+                ],
+                onEmpty: "Email Not Registered",
+              }); %> 
             </div>
               
-
-
           </div>
-          <%- include( "../partials/setEleValByID" ) %>
 
     </body>
 </html>

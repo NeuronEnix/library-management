@@ -5,18 +5,10 @@ const { resOk, resErr, resErrType, resRender } = require( "../../../handler").re
 module.exports = async ( req, res, next ) => {
     try {
         const { book_id } = req.body;
-        const bookDoc = await BookModel.findById( book_id, "qty" );
+        const bookDoc = await BookModel.findById( book_id,  { qty:1 } );
         
         // If book not found
-        if ( !bookDoc ) {
-            const popup = { typ: "warning", msg: "Invalid Book" };
-            return resRender( res, "book/purchaseBookPage", { popup, eleKeyValPair: req.body }, resErrType.resNotFound );
-                // return resErr( res, resErrType.resNotFound,{
-                //     infoToClient: "Invalid Book",
-                //     infoToServer: `Invalid book_id: ${book_id}`
-                // })
-
-        }
+        if ( !bookDoc ) return resErr( res, resErrType.resNotFound, { infoToClient: "Invalid Book" } );
         
         bookDoc.qty += parseInt( req.body.qty );
         bookDoc.save();
@@ -28,13 +20,8 @@ module.exports = async ( req, res, next ) => {
         const popup = { typ: "success", msg: "Book Purchased!" };
         const { seller, qty } = req.body;
 
-        delete req.body.seller;
-        delete req.body.qty;
-        return resRender( res, "book/purchaseBookPage", { ...req.body,
-            popup, eleKeyValPair: { seller, qty }, disableInput: true
-        });
+        return resRender( res, "book/purchaseBookPage", { ...req.body, popup, disableInput: true });
 
-        // resOk( res, purchaseDoc );
     } catch ( err ) {
         resErr( res, resErrType.unknownErr, { infoToServer: err } );
     }

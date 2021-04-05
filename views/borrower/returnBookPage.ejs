@@ -19,6 +19,8 @@
                   labelName: "Borrower Email",
                   name:"email",
                   type:"text",
+                  value: email,
+                  disabled: true,
                 } );%>
 
               </div><div class="form-group col-md-3" >
@@ -26,6 +28,7 @@
                   labelName: "Book Title",
                   name:"title",
                   type:"text",
+                  value: typeof title != "undefined" ? title : "",
                   required: "false"
                 } );%>
               </div>
@@ -36,6 +39,7 @@
                   labelName: "Author Name",
                   name:"author",
                   type:"text",
+                  value: typeof author != "undefined" ? author : "",
                   required:"false"
                 } );%>
               </div>
@@ -46,6 +50,7 @@
                   labelName: "Edition Number",
                   name:"edition",
                   type:"number",
+                  value: typeof edition != "undefined" ? edition : "",
                   required:"false"
                 } );%>
               </div>
@@ -61,40 +66,49 @@
           </div>
           </form>
           <div class="row" style="margin-left: 5px; margin-right: 5px; width: 100%;">
-            <% if( typeof bookMiniCardData != 'undefined' ) {
-              bookMiniCardData.forEach( ( val, i ) => { 
 
-                if ( i%4 === 0  ) {
-
-                  if ( i != 0 ) { %>
-                    </div>
-                  <% } %>
-                <div class="row" style="width: 100%">
-                  
-              <% }
-              const hiddenFieldNameList = Object.keys( val );
-              %>
-              <div class="col-md-3"> <%- include("../partials/bookMiniCard", {val, buttons: bookMiniCardButtons, hiddenFieldNameList } ); %> </div>
-            <% } ) %> 
+            <% for ( let i=0; i<miniCardDataList.length; ) { %>
+              <div class="row" style="width: 100%">
+                <% for ( let j=0; j<4 && i<miniCardDataList.length; ++j, ++i ) { %>
+                  <div class="col-md-3"> 
+                    <% const cardData = miniCardDataList[i] %>
+                    
+                    <%- include( "../partials/miniCard", {
+      
+                      title: cardData.title,
+                      subtitleList: [
+                        "By: " + cardData.author,
+                        "Edition: " + cardData.edition,
+                      ],
+                      bodyColorList: [ "green", "red" ],
+                      bodyList: [
+                        [ "Lent At", "Due At" ],
+                        [ cardData.lent_at, cardData.due_at ],
+                      ],
+                      buttonList: [
+                        { method: "post", action: "/book/return",   label: "Return",   hiddenFieldList: [ { name: "lend_id", value: cardData.lend_id } ] },
+                      ],
+      
+                    } ); %>
+                    
                   </div>
+                <% } %>
+              </div>
             <% } %>
-              
- 
-            <div class="row justify-content-center" style="width: 100%" >
-              <% if( typeof bookMiniCardData == 'undefined' || bookMiniCardData.length == 0 ) { %>
-                <h4> No Books To Be Returned </h4>
-              <% } else { %>
-                <%- include("../partials/pagination", {
-                  pg,
-                  eleCount: bookMiniCardData.length,
-                  form_id: "search_form"
-                }); %> 
-              <% } %>
-            </div>
-              
-
-
           </div>
+       
+          <div class="row justify-content-center" style="width: 100%" >
+            <%- include("../partials/pagination", {
+              pg,
+              eleCount: miniCardDataList.length,
+              maxEleCount: 8, 
+              hiddenFieldList: [
+                { name: "email", value: typeof email !== "undefined" ? email : "" },
+              ],
+              onEmpty: "No Books To Return",
+            }); %> 
+          </div>
+      
           <%- include( "../partials/setEleValByID" ) %>
 
     </body>

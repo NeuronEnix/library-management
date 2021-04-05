@@ -1,3 +1,19 @@
+<!-- {
+    hiddenFieldList: [
+    { name: "field name1", value: "field Value1" },
+    { name: "field name2", value: "field Value2" },
+    ]
+} -->
 <% hiddenFieldList.forEach( hiddenField => { %>
-    <input type="hidden" name="<%= hiddenField.name %>" value="<%= hiddenField.value %>" >
+
+    <% if( hiddenField.id ) { %>
+
+        <input type="hidden" id="<%= hiddenField.id %>" name="<%= hiddenField.name %>" value="<%= hiddenField.value %>" >
+        
+    <% } else { %>
+
+        <input type="hidden" name="<%= hiddenField.name %>" value="<%= hiddenField.value %>" >
+
+    <% } %>
+    
 <% } ) %>

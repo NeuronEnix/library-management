@@ -1,3 +1,16 @@
+<!-- {
+  modal_id: "this-modal-id",
+  modal_title: "Modal title",
+  modal_body_id: "Modal body" ,
+  modal_submit: {
+    action: "/path/to",
+    method: "post/get/.../",
+    label: "Eg. Confirm",
+    hiddenFieldList: [ // see more in /partials/hiddenField.ejs
+      { name: "some_id", value: some_id },
+    ],
+  },
+} -->
 <!-- Modal -->
 <div 
   class="modal fade" 
@@ -22,7 +35,12 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Confirm</button>
+          <form action="<%= modal_submit.action %>" method="<%= modal_submit.method %>">
+            <%- include( "./hiddenField", {
+              hiddenFieldList: modal_submit.hiddenFieldList,
+            }) %>
+            <button type="submit" class="btn btn-primary"> <%= modal_submit.label %> </button>
+          </form>
         </div>
       </div>
 

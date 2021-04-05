@@ -12,7 +12,6 @@ router.get( "/add", ( req, res, next) => {
 });
 
 router.post( "/add", isAuthenticated, controller.addBook );
-router.get( "/list", controller.bookList );
 router.get( "/search", controller.searchBook );
 
 
