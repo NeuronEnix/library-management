@@ -12,6 +12,7 @@ router.get( "/add", ( req, res, next) => {
 });
 
 router.post( "/add", isAuthenticated, controller.addBook );
+router.post( "/edit", isAuthenticated, controller.editBook );
 router.post( "/update-status", isAuthenticated, controller.updateStatus );
 
 module.exports = router;

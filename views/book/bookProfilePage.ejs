@@ -7,13 +7,13 @@
 <%- include("../partials/popup" ) %>
 <div class="row" style="margin-left: 5px;margin-right: 5px">
     <div class="col-md-2.2" >
-
+        <% const disabled = (editable == "true" ? "false" : "true") %>
         <%- include( "../partials/infoCard", {
             imgPath: "/book.png",
-            title: { label: "Title", name: "title", type: "text", disabled: "true", value: title },
+            title: { label: "Title", name: "title", type: "text", disabled, value: title },
             body: [
-                { label: "Author", name: "author", type: "text", disabled: "true", value: author },
-                { label: "Edition", name: "edition", type: "text", disabled: "true", value: edition },
+                { label: "Author", name: "author", type: "text", disabled, value: author },
+                { label: "Edition", name: "edition", type: "text", disabled, value: edition },
             ],
             buttons: [ 
                 {
@@ -34,15 +34,28 @@
                         },
                     },
                 }, { 
-                    label: "Edit", color: "primary", 
-                    formaction: "/book/edit", formmethod: "get",
-                    hiddenFieldList: [ { name: "book_id", value: book_id } ],
+                    label: (editable == "true" ? "Save": "Edit"), color: (editable == "true" ? "success": "primary"), 
+                    formaction: (editable == "true" ? "/book/edit" : "/book/profile") , formmethod: (editable == "true" ? "post" : "get"),
+                    onClick: "onEdit()",
+                    hiddenFieldList: [
+                    { name: "book_id", value: book_id },
+                    { name: "editable", value: editable ? "false" : "true" },
+                    { id: "edit-title", name: "title", value: title },
+                    { id: "edit-author", name: "author", value: author },
+                    { id: "edit-edition", name: "edition", value: edition },
+                    ],
                 },            
             ]
         } ) %>
         
     </div>
-
+    <script type="text/javascript">
+        function onEdit() {
+            document.getElementById( "edit-title" ).value = document.getElementById( "title").value;
+            document.getElementById( "edit-author" ).value = document.getElementById( "author").value;
+            document.getElementById( "edit-edition" ).value = document.getElementById( "edition").value;
+        }
+    </script>
     <link href="/css/progBar.css" rel="stylesheet" type="text/css">
 
     <div class="col-md-3">

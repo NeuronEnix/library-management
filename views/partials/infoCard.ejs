@@ -23,7 +23,7 @@
                             labelName: val.label,
                             name: val.name,
                             type: val.type,
-                            disabled: "true",
+                            disabled: val.disabled,
                             value: val.value,
                         } ) %>
                     </li>
@@ -39,11 +39,12 @@
                     <% } else { %>
                         <form>
                             <%- include( "./hiddenField", { hiddenFieldList: val.hiddenFieldList } ) %>
-                            <a type="submit" class="float-right btn btn-<%= val.color %>" 
+                            <button type="submit" class="float-right btn btn-<%= val.color %>" 
+                                onclick="<%= val.onClick %>"
                                 formaction ="<%= val.formaction %>"
                                 formmethod ="<%= val.formmethod %>">
                                 <%= val.label %>
-                            </a>
+                            </button>
                         </form>
                     <% } %>
                 </div>

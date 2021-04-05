@@ -8,7 +8,7 @@ const { resRender } = require( "../../../handler").resHandler;
 
 module.exports = async( req, res, next) => {
 
-    const { book_id } = req.query;
+    const { book_id, editable=false } = req.query;
 
     const pg = evaluatePageNo( req.query.pg, req.query.pgAction );
     const noOfDocToBeSkipped = pg * noOfUserHistoryListPerPage;
@@ -96,7 +96,7 @@ module.exports = async( req, res, next) => {
     bookProfileData[0].book_id = book_id;
     
     const dataToBeSent =  { 
-        pg, ...bookProfileData[0],
+        pg, ...bookProfileData[0], editable,
         filter: { borrowed, reissued, overDue, returned } 
     };
     if ( req.query.popTyp ) dataToBeSent.popup = {
