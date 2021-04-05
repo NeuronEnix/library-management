@@ -38,11 +38,11 @@
                     formaction: (editable == "true" ? "/book/edit" : "/book/profile") , formmethod: (editable == "true" ? "post" : "get"),
                     onClick: "onEdit()",
                     hiddenFieldList: [
-                    { name: "book_id", value: book_id },
-                    { name: "editable", value: editable ? "false" : "true" },
-                    { id: "edit-title", name: "title", value: title },
-                    { id: "edit-author", name: "author", value: author },
-                    { id: "edit-edition", name: "edition", value: edition },
+                        { name: "book_id", value: book_id },
+                        { name: "editable", value: editable ? "false" : "true" },
+                        { id: "edit-title", name: "title", value: title },
+                        { id: "edit-author", name: "author", value: author },
+                        { id: "edit-edition", name: "edition", value: edition },
                     ],
                 },            
             ]

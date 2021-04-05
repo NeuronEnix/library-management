@@ -5,7 +5,7 @@ module.exports = async ( req, res, next ) => {
     const { book_id, title, author, edition } = req.body;
     try {
         ;
-        console.log(await BookModel.updateOne( { _id: book_id }, { $set: { title, author, edition } } ) )
+        await BookModel.updateOne( { _id: book_id }, { $set: { title, author, edition } } );
         const query = `book_id=${book_id}&popTyp=success&popMsg=Book Edited`;
 
         res.redirect( "/book/profile?" + query );

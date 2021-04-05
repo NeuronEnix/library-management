@@ -4,17 +4,17 @@
 <head> <title>LMS - User Profile</title> </head>
 
 <%- include( "../partials/navbar", { activeNav: "User" } ) %>
-<%- include("../partials/popup" ) %>
+<%- include( "../partials/popup" ) %>
 <div class="row" style="margin-left: 5px;margin-right: 5px; padding: 0px 0px">
     
     <div class="col-md-2.2" >
-
+        <% const disabled = (editable == "true" ? "false" : "true") %>
         <%- include( "../partials/infoCard", {
             imgPath: "/user.png",
-            title: { label: "Name", name: "name", type: "text", disabled: "true", value:name },
+            title: { label: "Name", name: "name", type: "text", disabled, value:name },
             body: [
-                { label: "Email", name: "email", type: "text", disabled: "true", value: email},
-                { label: "Contact", name: "contact", type: "text", disabled: "true", value: contact},
+                { label: "Email", name: "email", type: "text", disabled, value: email},
+                { label: "Contact", name: "contact", type: "text", disabled, value: contact},
             ],
             buttons: [ 
                 {
@@ -35,14 +35,29 @@
                         },
                     },
                 }, { 
-                    label: "Edit", color: "primary", 
-                    formaction: "/user/edit", formmethod: "get",
-                    hiddenFieldList: [ { name: "user_id", value: user_id } ],
+                    label: (editable == "true" ? "Save": "Edit"), color: (editable == "true" ? "success": "primary"), 
+                    formaction: (editable == "true" ? "/user/edit" : "/user/profile") , formmethod: (editable == "true" ? "post" : "get"),
+                    onClick: "onEdit()",
+                    hiddenFieldList: [
+                        { name: "user_id", value: user_id },
+                        { name: "editable", value: editable ? "false" : "true" },
+                        { id: "edit-email", name: "email", value: email },
+                        { id: "edit-name", name: "name", value: name },
+                        { id: "edit-contact", name: "contact", value: contact },
+                    ],
                 },            
             ],
         } ) %>
         
     </div>
+
+    <script type="text/javascript">
+        function onEdit() {
+            document.getElementById( "edit-email" ).value = document.getElementById( "email").value;
+            document.getElementById( "edit-contact" ).value = document.getElementById( "contact").value;
+            document.getElementById( "edit-name" ).value = document.getElementById( "name").value;
+        }
+    </script>
 
     <link href="/css/progBar.css" rel="stylesheet" type="text/css">
 

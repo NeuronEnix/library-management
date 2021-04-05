@@ -6,6 +6,7 @@ const { resRender } = require( "../../handler" ).resHandler;
 
 router.post( "/register", validate.register, controller.register );
 router.post( "/update-status", controller.updateStatus );
+router.post( "/edit", controller.editUser );
 router.post( "/sign-in", validate.signIn, controller.signIn );
 
 
