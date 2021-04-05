@@ -7,7 +7,7 @@ var userSchema = new mongoose.Schema ({
     name: String,
     contact: Number,
     typ: { type: String, default: "c" }, // c->customer; e->employee;
-    sts: { type: String, default:'a' },     // 'a' -> active ; 'd' -> disabled
+    sts: { type: String, default:'e' },     // 'e' -> enabled ; 'd' -> disabled
 });
 
 const User = mongoose.model( 'users', userSchema ) ;

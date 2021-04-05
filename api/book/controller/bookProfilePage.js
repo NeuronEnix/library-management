@@ -94,6 +94,7 @@ module.exports = async( req, res, next) => {
     ]);
 
     bookProfileData[0].book_id = book_id;
+    
     const dataToBeSent =  { 
         pg, ...bookProfileData[0],
         filter: { borrowed, reissued, overDue, returned } 

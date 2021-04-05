@@ -20,7 +20,7 @@ module.exports = async( req, res, next) => {
 
     const userProfileData = await UserModel.aggregate([
         { $match: { _id: mongoose.Types.ObjectId( user_id ) } },
-        { $project: { _id:1, name:1, email:1, contact:1 } },
+        { $project: { _id:1, name:1, email:1, contact:1, sts:1 } },
         { $lookup: {
             from: "lends",
             let: { user_id: "$_id" },
@@ -94,12 +94,15 @@ module.exports = async( req, res, next) => {
     ]);
 
     if ( !userProfileData[0].trackers ) userProfileData[0].trackers = { history:[] };
-
     userProfileData[0].user_id = req.query.user_id;
 
-    return resRender( res, "user/userProfilePage", {
+    const dataToBeSent =  { 
         pg, ...userProfileData[0],
-        filter: { borrowed, reissued, overDue, returned },
-    });
+        filter: { borrowed, reissued, overDue, returned } 
+    };
+    if ( req.query.popTyp ) dataToBeSent.popup = {
+        typ: req.query.popTyp, msg:req.query.popMsg
+    }
+    return resRender( res, "user/userProfilePage", dataToBeSent );
 
 }

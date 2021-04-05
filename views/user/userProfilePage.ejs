@@ -4,6 +4,7 @@
 <head> <title>LMS - User Profile</title> </head>
 
 <%- include( "../partials/navbar", { activeNav: "User" } ) %>
+<%- include("../partials/popup" ) %>
 <div class="row" style="margin-left: 5px;margin-right: 5px; padding: 0px 0px">
     
     <div class="col-md-2.2" >
@@ -15,14 +16,30 @@
                 { label: "Email", name: "email", type: "text", disabled: "true", value: email},
                 { label: "Contact", name: "contact", type: "text", disabled: "true", value: contact},
             ],
-            buttons: [
-
-                { label: "Click To Disable", type: "danger", 
-                formaction: "/user/status", formmethod: "post" },
-
-                { label: "Edit", type: "primary", 
-                formaction: "/user/edit", formmethod: "get" },            
-            ]
+            buttons: [ 
+                {
+                    label: "Click  To  " + (sts == "e" ? "Disable" : "Enable"), color: sts == "e" ? "danger" : "success",
+                    modal: {
+                        modal_id: "user-status-modal",
+                        modal_title: "Confirm To " + (sts == "e" ? "Disable" : "Enable"),
+                        modal_body_id: "user-status-modal-body" ,
+                        modal_body: "User Email: " + email ,
+                        modal_submit: {
+                            action: "/user/update-status",
+                            method: "post",
+                            label: sts == "e" ? "Disable" : "Enable",
+                            hiddenFieldList: [ 
+                                { name: "user_id", value: user_id },
+                                { name: "sts", value: sts == "e" ? "d" : "e" },
+                            ],
+                        },
+                    },
+                }, { 
+                    label: "Edit", color: "primary", 
+                    formaction: "/user/edit", formmethod: "get",
+                    hiddenFieldList: [ { name: "user_id", value: user_id } ],
+                },            
+            ],
         } ) %>
         
     </div>
