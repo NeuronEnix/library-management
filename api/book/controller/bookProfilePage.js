@@ -49,7 +49,10 @@ module.exports = async( req, res, next) => {
             from: "lends",
             let: { book_id: "$_id" },
             pipeline: [
-                { $match: LendModel.getMatchFilter( { borrowed, reissued, overDue, returned } ) },
+                { $match: LendModel.getMatchFilter(
+                    [ { $eq: [ "$book_id", "$$book_id" ] } ],
+                    { borrowed, reissued, overDue, returned },
+                )},
                 { $project: { lent_at:1, due_at:1, ret_at:1, sts:1, borrower_id:1, _id:0 } },
                 { $sort: { lent_at:-1 } },
                 { $skip: noOfDocToBeSkipped || 0 },
@@ -94,7 +97,7 @@ module.exports = async( req, res, next) => {
     
     return resRender( res, "book/bookProfilePage", { 
         pg, ...bookProfileData[0],
-        filter: { borrowed, reissued, overDue, returned } },
-    );
+        filter: { borrowed, reissued, overDue, returned } 
+    });
 
 }

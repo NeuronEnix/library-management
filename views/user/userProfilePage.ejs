@@ -35,7 +35,7 @@
         <%- include( "../partials/progBar", {
             body: [
                 {
-                    label: "Borrowed", color: "success",
+                    label: "Borrowed", color: "primary",
                     value: borrowed, progBar: "false"
                 }, {
                     label: "Reissued", color: "warning",
@@ -66,18 +66,33 @@
                 { name: "user_id", value: user_id },
             ],
             checkBoxList: [
-                { label: "Borrowed", id: "borrowed", name: "borrowed", color: "primary", checked: true },
-                { label: "Reissued", id: "reissued", name: "reissued", color: "warning", checked: true },
-                { label: "Over Due", id: "overDue",  name: "overDue",  color: "danger",  checked: true },
-                { label: "Returned", id: "returned", name: "returned", color: "success", checked: true },
+                { label: "Borrowed", id: "borrowed", name: "borrowed", color: "primary", checked: filter.borrowed },
+                { label: "Reissued", id: "reissued", name: "reissued", color: "warning", checked: filter.reissued },
+                { label: "Over Due", id: "overDue",  name: "overDue",  color: "danger",  checked: filter.overDue },
+                { label: "Returned", id: "returned", name: "returned", color: "success", checked: filter.returned },
             ],
             table: { 
-                startSlNum: 1,
+                startSlNum: pg*20 + 1,
                 headerList: [ "Book", "Borrowed", "Due", "Returned" ],
                 rowListKeys: [ "title", "lent_at", "due_at", "ret_at", ],
                 rowList: trackers.history,
             }
         } ) %>
+
+        <div class="row justify-content-center" style="width: 100%" >
+            <%- include("../partials/pagination", {
+              pg,
+              eleCount: trackers.history.length,
+              maxEleCount: 20, 
+              hiddenFieldList: [
+                { name: "borrowed", value: filter.borrowed },
+                { name: "reissued", value: filter.reissued },
+                { name: "overDue",  value: filter.overDue  },
+                { name: "returned", value: filter.returned },
+                { name: "user_id", value: user_id },
+              ],
+            }); %> 
+          </div>
 
     </div>
     

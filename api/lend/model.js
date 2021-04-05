@@ -14,21 +14,19 @@ const lendSchema = new mongoose.Schema ({
     sts: { type: String, default:'l' },     // 'l' -> lent ; 'r' -> returned
 });
 
-lendSchema.statics.getMatchFilter = ( { borrowed, reissued, overDue, returned } ) => {
-
-    const matchCondition = [ { $eq: [ "$book_id", "$$book_id" ] } ]
+lendSchema.statics.getMatchFilter = ( defaultMatchCondition, { borrowed, reissued, overDue, returned } ) => {
     
-    if ( !returned ) matchCondition.push(  { $ne: [ "$sts", "r" ] } );
+    if ( !returned ) defaultMatchCondition.push(  { $ne: [ "$sts", "r" ] } );
 
-    if ( !overDue ) matchCondition.push( { $or: [
+    if ( !overDue ) defaultMatchCondition.push( { $or: [
         { $gt: [ "$due_at", new Date() ] }, { $ne: [ "$sts", "l" ] }
     ]} );
     
-    if ( !borrowed ) matchCondition.push( { $or: [
+    if ( !borrowed ) defaultMatchCondition.push( { $or: [
         { $lt: [ "$due_at", new Date() ] }, { $ne: [ "$sts", "l" ] }
     ]} );
 
-    return { $expr: { $and: matchCondition } };
+    return { $expr: { $and: defaultMatchCondition } };
     
 }
 const LendModel = mongoose.model( 'lends', lendSchema ) ;

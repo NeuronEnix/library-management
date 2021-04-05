@@ -80,7 +80,7 @@
                 { label: "Returned", id: "returned", name: "returned", color: "success", checked: filter.returned },
             ],
             table: { 
-                startSlNum: 1,
+                startSlNum: pg*20 + 1,
                 headerList: [ "User", "Borrowed", "Due", "Returned" ],
                 rowListKeys: [ "name", "lent_at", "due_at", "ret_at", ],
                 rowList: trackers.history

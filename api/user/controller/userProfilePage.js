@@ -1,18 +1,25 @@
 const mongoose = require("mongoose");
 const UserModel = require( "../model" );
+const LendModel = require( "../../lend/model" );
 
 const { noOfBookHistoryListPerPage } = require( "../../../config").user;
-
+const { evaluatePageNo } = require( "../../../handler").pagination;
 const { resRender } = require( "../../../handler").resHandler;
 
 module.exports = async( req, res, next) => {
 
-    const { pg = 0 } = req.query;
+    const { user_id } = req.query;
 
+    const pg = evaluatePageNo( req.query.pg, req.query.pgAction );
     const noOfDocToBeSkipped = pg * noOfBookHistoryListPerPage;
 
+    let { borrowed, reissued, overDue, returned } = req.query;
+
+    const allTheFilter = borrowed || reissued || overDue || returned;
+    if ( allTheFilter === undefined ) borrowed = reissued = overDue = returned = 'on';
+
     const userProfileData = await UserModel.aggregate([
-        { $match: { _id: mongoose.Types.ObjectId( req.query.user_id ) } },
+        { $match: { _id: mongoose.Types.ObjectId( user_id ) } },
         { $project: { _id:1, name:1, email:1, contact:1 } },
         { $lookup: {
             from: "lends",
@@ -42,7 +49,10 @@ module.exports = async( req, res, next) => {
             from: "lends",
             let: { user_id: "$_id" },
             pipeline: [
-                { $match: { $expr: { $eq: [ "$borrower_id", "$$user_id" ] } } },
+                { $match: LendModel.getMatchFilter(
+                    [ { $eq: [ "$borrower_id", "$$user_id" ] } ],
+                    { borrowed, reissued, overDue, returned },
+                )},
                 { $project: { lent_at:1, due_at:1, ret_at:1, sts:1, book_id:1, _id:0 } },
                 { $sort: { lent_at:-1 } },
                 { $skip: noOfDocToBeSkipped || 0 },
@@ -83,9 +93,13 @@ module.exports = async( req, res, next) => {
         { $project: { _id:0, history:0 } },
     ]);
 
-    if ( !userProfileData[0].trackers ) userProfileData[0].trackers = { history:[]};
-    // if ( !userProfileData.trackers ) userProfileData.trackers = { borrowed:0 };
+    if ( !userProfileData[0].trackers ) userProfileData[0].trackers = { history:[] };
+
     userProfileData[0].user_id = req.query.user_id;
-    return resRender( res, "user/userProfilePage", userProfileData[0] );
+
+    return resRender( res, "user/userProfilePage", {
+        pg, ...userProfileData[0],
+        filter: { borrowed, reissued, overDue, returned },
+    });
 
 }
