@@ -17,14 +17,23 @@ const lendSchema = new mongoose.Schema ({
 
 lendSchema.statics.getMatchFilter = ( defaultMatchCondition, { borrowed, reissued, overDue, returned } ) => {
     
-    if ( !returned ) defaultMatchCondition.push(  { $ne: [ "$sts", "r" ] } );
-
+    if ( !returned ) defaultMatchCondition.push(  { $ne: [ "$sts", "r" ] } ); // to match everything but return
+    
     if ( !overDue ) defaultMatchCondition.push( { $or: [
-        { $gt: [ "$due_at", new Date() ] }, { $ne: [ "$sts", "l" ] }
+        { $gt: [ "$due_at", new Date() ] }, // to match borrowed and re-issued
+        { $ne: [ "$sts", "l" ] } // to match returned
+    ]} );
+    
+    if ( !reissued ) defaultMatchCondition.push( { $or: [
+        { $eq: [ { $size: "$re_iss" }, 0 ] }, // to match borrowed
+        { $lt: [ "$due_at", new Date() ] },  // to math over due
+        { $ne: [ "$sts", "l" ] } // to match returned
     ]} );
     
     if ( !borrowed ) defaultMatchCondition.push( { $or: [
-        { $lt: [ "$due_at", new Date() ] }, { $ne: [ "$sts", "l" ] }
+        { $ne: [ { $size: "$re_iss" }, 0 ] }, // to match re-issued
+        { $lt: [ "$due_at", new Date() ] }, // to math over due
+        { $ne: [ "$sts", "l" ] } // to match returned
     ]} );
 
     return { $expr: { $and: defaultMatchCondition } };

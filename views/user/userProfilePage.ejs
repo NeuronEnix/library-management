@@ -63,7 +63,7 @@
 
     <div class="col-md-3">
 
-        <% const { borrowed=0, reissued=0, overDue=0, lifeTimeBorrow=0, lifeTimeOverDue=0 } = trackers; %>
+        <% const { borrowed=0, reissued=0, overDue=0, lifeTimeBorrow=0, lifeTimeReIssue=0, lifeTimeOverDue=0, } = trackers; %>
         <%- include( "../partials/progBar", {
             body: [
                 {
@@ -80,7 +80,7 @@
                     value: lifeTimeBorrow, progBar: "false" 
                 }, { 
                     label: "Life Time Reissued", color: "warning", 
-                    value: 0, progBar: "false" 
+                    value: lifeTimeReIssue, progBar: "false" 
                 }, { 
                     label: "Life Time Over Due", color: "danger", 
                     value: lifeTimeOverDue, progBar: "false" 
@@ -105,8 +105,8 @@
             ],
             table: { 
                 startSlNum: pg*20 + 1,
-                headerList: [ "Book", "Borrowed", "Due", "Returned" ],
-                rowListKeys: [ "title", "lent_at", "due_at", "ret_at", ],
+                headerList: [ "Book", "Borrowed", "Reissued", "Due", "Returned" ],
+                rowListKeys: [ "title", "lent_at", "re_iss_at", "due_at", "ret_at", ],
                 rowList: trackers.history,
             }
         } ) %>

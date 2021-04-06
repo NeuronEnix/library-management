@@ -26,12 +26,21 @@ module.exports = async( req, res, next) => {
             let: { user_id: "$_id" },
             pipeline: [
                 { $match: { $expr: { $eq: [ "$borrower_id", "$$user_id" ] } } },
-                { $project: { lent_at:1, due_at:1, ret_at:1, sts:1, _id:0 } },
+                { $project: { lent_at:1, due_at:1, re_iss:1, ret_at:1, sts:1, _id:0 } },
                 { $group: {
                     _id: null,
                     lifeTimeBorrow: { $sum: 1 },
+                    lifeTimeReIssue: { $sum: { $size: "$re_iss" } },
                     lifeTimeOverDue: { $sum: { $cond: [ { $gt: [ "$ret_at", "$due_at" ] }, 1, 0 ] } },
                     borrowed: { $sum: { $cond: [ { $eq: [ "$sts", "l" ] }, 1, 0 ] } },
+                    reissued: { $sum: { $cond: [
+                        { $and: [
+                            { $eq: [ "$sts", "l" ] },
+                            { $gt: [ { $size: "$re_iss" }, 0 ] },
+                            
+                        ]},
+                        1, 0 ], 
+                    }},
                     overDue: { $sum: { $cond: [
                         { $and: [
                             { $eq: [ "$sts", "l" ] },
@@ -53,8 +62,8 @@ module.exports = async( req, res, next) => {
                     [ { $eq: [ "$borrower_id", "$$user_id" ] } ],
                     { borrowed, reissued, overDue, returned },
                 )},
-                { $project: { lent_at:1, due_at:1, ret_at:1, sts:1, book_id:1, _id:0 } },
-                { $sort: { lent_at:-1 } },
+                { $project: { lent_at:1, due_at:1, ret_at:1, re_iss:1, sts:1, book_id:1, _id:0 } },
+                { $sort: { due_at:-1 } },
                 { $skip: noOfDocToBeSkipped || 0 },
                 { $limit: noOfBookHistoryListPerPage || 20 },
                 { $lookup: {
@@ -75,12 +84,14 @@ module.exports = async( req, res, next) => {
                             branches: [
                                 { case: { $eq: [ "$sts", "r" ] }, then: "success" },
                                 { case: { $lt: [ "$due_at", new Date() ] }, then: "danger" },
+                                { case: { $gt: [ { $size: "$re_iss" }, 0 ] }, then: "warning" },
                             ],
                             default: "primary",
                             },
                         },
                         title: "$bookDoc.title",
                         lent_at: { $dateToString: { date: "$lent_at",format: "%d-%m-%Y", timezone: "+05:30", onNull: "NULL" } },
+                        re_iss_at: { $dateToString: { date: { $last: "$re_iss" } ,format: "%d-%m-%Y", timezone: "+05:30", onNull: "No Reissue" } },
                         due_at: { $dateToString: { date: "$due_at",format: "%d-%m-%Y", timezone: "+05:30", onNull: "NULL" } },
                         ret_at: { $dateToString: { date: "$ret_at",format: "%d-%m-%Y", timezone: "+05:30", onNull: "Not Returned" } },
                     }},

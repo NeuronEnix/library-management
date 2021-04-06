@@ -59,13 +59,13 @@
     <link href="/css/progBar.css" rel="stylesheet" type="text/css">
 
     <div class="col-md-3">
-        <% const { avail=0, borrowed=0, reissued=0, overDue=0, lifeTimeBorrow=0, lifeTimeOverDue=0 } = trackers;
+        <% const { avail=0, borrowed=0, reissued=0, overDue=0, lifeTimeBorrow=0, lifeTimeReIssue=0, lifeTimeOverDue=0, } = trackers;
         // ( variable || 1 ) -> used to avoid division by zero error
             const totalAvailable = avail + borrowed;
             const availPercent = (avail * 100 / (totalAvailable || 1) ).toFixed(2);
             const borrowedPercent = (borrowed * 100 / (totalAvailable || 1)).toFixed(2);
-            const reissuedPercent = (reissued * 100 / (totalAvailable || 1)).toFixed(2);
-            const overDuePercent = (overDue * 100 / (totalAvailable || 1) ).toFixed(2);
+            const reissuedPercent = (reissued * 100 / (borrowed || 1)).toFixed(2);
+            const overDuePercent = (overDue * 100 / (borrowed || 1) ).toFixed(2);
         %>
         <%- include( "../partials/progBar", {
             body: [ 
@@ -77,16 +77,16 @@
                     value: borrowed, value2: totalAvailable, percentage: borrowedPercent, 
                 }, { 
                     label: "Reissued", color: "warning",
-                    value: reissued, value2: totalAvailable, percentage: reissuedPercent, 
+                    value: reissued, value2: borrowed, percentage: reissuedPercent, 
                 }, { 
                     label: "Over Due", color: "danger",
-                    value: overDue, value2: totalAvailable, percentage: overDuePercent, 
+                    value: overDue, value2: borrowed, percentage: overDuePercent, 
                 }, { 
                     label: "Life Time Borrows", color: "primary",
                     value: lifeTimeBorrow, progBar: "false" 
                 }, { 
                     label: "Life Time Reissued", color: "warning", 
-                    value: 0, progBar: "false" 
+                    value: lifeTimeReIssue, progBar: "false" 
                 }, { 
                     label: "Life Time Over Due", color: "danger", 
                     value: lifeTimeOverDue, progBar: "false" 
@@ -110,8 +110,8 @@
             ],
             table: { 
                 startSlNum: pg*20 + 1,
-                headerList: [ "User", "Borrowed", "Due", "Returned" ],
-                rowListKeys: [ "name", "lent_at", "due_at", "ret_at", ],
+                headerList: [ "User", "Borrowed", "Reissued", "Due", "Returned" ],
+                rowListKeys: [ "name", "lent_at", "re_iss_at", "due_at", "ret_at", ],
                 rowList: trackers.history
             }
         } ) %>
