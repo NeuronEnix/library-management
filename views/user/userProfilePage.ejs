@@ -8,7 +8,11 @@
 <div class="row" style="margin-left: 5px;margin-right: 5px; padding: 0px 0px">
     
     <div class="col-md-2.2" >
-        <% const disabled = (editable == "true" ? "false" : "true") %>
+
+        <% 
+        editable = typeof editable != "undefined" ? editable : "false";
+        const disabled = (editable == "true" ? "false" : "true");
+        %>
         <%- include( "../partials/infoCard", {
             imgPath: "/user.png",
             title: { label: "Name", name: "name", type: "text", disabled, value:name },
