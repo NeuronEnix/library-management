@@ -6,14 +6,15 @@ const schema = {
     book_id: Joi.string().alphanum().min(24).max(24),
     sts: Joi.string().min(1).max(1),
     
-    title: Joi.string().alphanum().min(1).max(20),
-    author: Joi.string().alphanum().min(1).max(20),
+    title: Joi.string().min(1).max(20),
+    author: Joi.string().min(1).max(20),
     edition: Joi.number().min(1).max(20),
 
-    pub: Joi.string().alphanum().min(1).max(20),
+    pub: Joi.string().min(1).max(20),
     lend_price: Joi.number().min(10).max(1000),
     
 }
+module.exports.bookSchema = schema;
 
 module.exports.postAdd = ( req, res, next ) => {
     Joi.object({

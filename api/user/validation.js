@@ -10,6 +10,8 @@ const schema = {
     contact: Joi.number().min(1).max(9999999999),
 }
 
+module.exports.userSchema = schema;
+
 module.exports.postRegister = ( req, res, next ) => {
     Joi.object({
 
