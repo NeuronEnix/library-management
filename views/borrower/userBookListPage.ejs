@@ -86,7 +86,8 @@
                         [ cardData.lent_at, cardData.due_at ],
                       ],
                       buttonList: [
-                        { method: "post", action: "/book/return",   label: "Return",   hiddenFieldList: [ { name: "lend_id", value: cardData.lend_id } ] },
+                      { method: "post", action: "/book/return",   label: "Return",   hiddenFieldList: [ { name: "lend_id", value: cardData.lend_id } ] },
+                      { method: "post", action: "/book/re-issue",   label: "Re-Issue",   hiddenFieldList: [ { name: "lend_id", value: cardData.lend_id } ] },
                       ],
       
                     } ); %>

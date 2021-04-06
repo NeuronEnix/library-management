@@ -57,8 +57,8 @@
                         [ cardData.trackers.borrowed, cardData.trackers.overDue ],
                       ],
                       buttonList: [
-                        { method: "get", action: "/book/return",  label: "Return",   hiddenFieldList: [ { name: "email", value: cardData.email } ] },
-                        { method: "get", action: "/user/profile", label: "View",     hiddenFieldList: [ { name: "user_id", value: cardData.user_id } ] },
+                        { method: "get", action: "/book/user-book",  label: "View Books", hiddenFieldList: [ { name: "email", value: cardData.email } ] },
+                        { method: "get", action: "/user/profile", label: "View Profile", hiddenFieldList: [ { name: "user_id", value: cardData.user_id } ] },
                       ],
       
                     } ); %>

@@ -21,8 +21,7 @@ module.exports = async ( req, res, next ) => {
         bookDoc.save(); // Deduct and save and then lend the book
         
         const userDoc = await UserModel.findById( lendDoc.borrower_id, "-_id email" );
-        console.log( userDoc );
-        return res.redirect( "/book/return" + `?pg=0&email=${userDoc.email}&popTyp=success&popMsg=Book Returned - ${bookDoc.title}` );
+        return res.redirect( "/book/user-book" + `?pg=0&email=${userDoc.email}&popTyp=success&popMsg=Book Returned - ${bookDoc.title}` );
         
     } catch ( err ) {
         

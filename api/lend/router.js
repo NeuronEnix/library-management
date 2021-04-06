@@ -8,7 +8,8 @@ router.post( "/lend", controller.lendBook );
 router.get( "/lend",  controller.lendBookPage );
 
 router.post( "/return", controller.returnBook );
+router.post( "/re-issue", controller.reIssueBook );
 
-router.get( "/return", controller.returnBookPage );
+router.get( "/user-book", controller.userBookListPage );
 
 module.exports = router;

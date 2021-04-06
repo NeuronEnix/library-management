@@ -63,6 +63,6 @@ module.exports = async( req, res, next) => {
     if ( email && await UserModel.exists( { email } ) == false )
         pageData.popup = { typ: "warning", msg: "Email Not Registered!" };
         
-    return resRender( res, "borrower/returnBookPage", pageData );
+    return resRender( res, "borrower/userBookListPage", pageData );
 
 }

@@ -11,6 +11,7 @@ const lendSchema = new mongoose.Schema ({
     lent_at: { type: Date, default: moment() },
     due_at: { type: Date, default: moment().add( 7, "days" ) },
     ret_at: { type: Date },
+    re_iss: { type: [mongoose.Schema.Types.Date], default: [] },
     sts: { type: String, default:'l' },     // 'l' -> lent ; 'r' -> returned
 });
 
